@@ -1,7 +1,12 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Dominik
- * Date: 12.06.2017
- * Time: 22:05
- */
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title of the document</title>
+</head>
+
+<body>
+Content of the document......
+</body>
+
+</html>
