@@ -241,13 +241,25 @@ session_start();
 
         function showContent(){
             echo("<h2>Testing Contents</h2><p>Test Content</p>");
+            renderVillage();
+        }
 
-            ?>
+        function renderVillage() {
 
+            if(! $oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
+                echo("Could not connect to the databas!");
+            }
 
+            $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = 2;";
+            $mResult = $oMysqli->query($sSelectQuery);
 
-            <?php
+            $oMysqli->close();
 
+            $aRow = mysqli_fetch_assoc($mResult);
+            // echo ("<p>Headquarters: ". $mResult[""] ."</p>");
+            echo ("<p>Woodproduction: ". $aRow["wood"] ."</p>");
+            echo ("<p>Stoneproduction: ". $aRow["stone"] ."</p>");
+            echo ("<p>Metalproduction: ". $aRow["metal"] ."</p>");
         }
 
         function showLoginForm(){
