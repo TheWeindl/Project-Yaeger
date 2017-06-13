@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+require_once("config.php");
+session_start();
+?>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -93,6 +97,16 @@
         </div>
     </div>
 
+    <div class="container testing">
+        <p>testing</p>
+        <?php
+        if(! $oMySqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
+            die("Database connection could not be established!");
+        } else {
+            echo "<p>Connection established</p>";
+        }
+        ?>
+    </div>
 
 </main>
 
