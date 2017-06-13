@@ -12,7 +12,10 @@ body {
     flex-direction: column;
 }
 
+.progress-bar {
 
+    transition: width 1s ease;
+}
 
 .panel-res {
     width: 20vw;

@@ -11,9 +11,8 @@ let val = 0;
 function makeProgress() {
     if(val > 100) {
         console.log("ended");
-        clearInterval(interval);
-    } else if(val == 100) {
-
+        //clearInterval(interval);
+        val = 0;
     } else {
         $pbMetal.attr('aria-valuenow', val);
         $pbMetal.css("width", val+"%");
