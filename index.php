@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>project-yaeger</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -23,17 +24,13 @@
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#" data-toggle="modal" data-target="#loginModal">Übersicht</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Something</a></li>
-
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Settings</a></li>
-                            <li><a href="#">Logout</a></li>
+                            <li><a href="#">About us</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -44,11 +41,63 @@
 
 
 <main>
+    <div class="container login">
+        <div class="panel panel-default">
+            <div class="panel-heading">Login</div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">U</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" id="username">
+                </div>
+                <br/>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">P</span>
+                    <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                </div>
+                <br/>
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-primary" id="sendButt">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container register">
+        <div class="panel panel-default">
+            <div class="panel-heading">Register</div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon0">E</span>
+                    <input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon1" id="email">
+                </div>
+                <br/>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">U</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" id="username">
+                </div>
+                <br/>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">P</span>
+                    <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                </div>
+                <br/>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon2">P</span>
+                    <input type="text" class="form-control" placeholder="Password again" aria-describedby="basic-addon1">
+                </div>
+                <br/>
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-primary" id="sendButt">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </main>
 
 <footer>
-
+    <a href="#">Impressum</a>
 </footer>
 
 

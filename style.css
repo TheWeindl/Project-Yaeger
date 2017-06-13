@@ -7,6 +7,9 @@
 body {
     height:100vh;
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 header {
@@ -15,7 +18,6 @@ header {
 
 nav.navbar.navbar-default {
     border-radius: 0px;
-
 }
 
 main {
@@ -28,7 +30,6 @@ main {
 }
 
 .progress-bar {
-
     transition: width 1s ease;
 }
 
@@ -39,3 +40,20 @@ main {
 .progress {
     margin: 0;
 }
+
+footer {
+    width: 100vw;
+    background-color: #f8f8f8;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+footer a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    align-self: center;
+}
+
