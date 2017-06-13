@@ -5,11 +5,26 @@
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height:100vh;
-    flex-direction: column;
+    width: 100vw;
+}
+
+header {
+    width: 100%;
+}
+
+nav.navbar.navbar-default {
+    border-radius: 0px;
+
+}
+
+main {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-left: 10vw;
+    padding-right: 10vw;
 }
 
 .progress-bar {
