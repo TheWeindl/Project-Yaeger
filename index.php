@@ -106,9 +106,13 @@ session_start();
             echo "<p>Connection established</p>";
         }
 
-        $sSelectQuery = "SELECT * FROM user WHERE userID='1';";
+        $sSelectQuery = "SELECT * FROM user;";
         $mResult = $oMysqli->query($sSelectQuery);
-        echo ($mResult);
+        //var_dump($mResult);
+        //echo $mResult["user"];
+
+        if (!$oMysqli->close())
+            die("could not close DB connection");
         ?>
     </div>
 
