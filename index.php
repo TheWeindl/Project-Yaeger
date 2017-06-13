@@ -106,10 +106,16 @@ session_start();
             echo "<p>Connection established</p>";
         }
 
+
+
+        echo ($aVar);
         $sSelectQuery = "SELECT * FROM user;";
         $mResult = $oMysqli->query($sSelectQuery);
-        //var_dump($mResult);
-        //echo $mResult["user"];
+        echo($mResult);
+        while ($aRow = mysqli_fetch_assoc($mResult)) {
+            var_dump($aRow);
+            echo ($aRow["userID"]);
+        }
 
         if (!$oMysqli->close())
             die("could not close DB connection");
