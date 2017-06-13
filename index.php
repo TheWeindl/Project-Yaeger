@@ -105,6 +105,10 @@ session_start();
         } else {
             echo "<p>Connection established</p>";
         }
+
+        $sSelectQuery = "SELECT * FROM user WHERE userID='1';";
+        $mResult = $oMysqli->query($sSelectQuery);
+        var_dump($mResult);
         ?>
     </div>
 
