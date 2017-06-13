@@ -108,7 +108,7 @@ session_start();
 
         $sSelectQuery = "SELECT * FROM user WHERE userID='1';";
         $mResult = $oMysqli->query($sSelectQuery);
-        var_dump($mResult);
+        echo ($mResult);
         ?>
     </div>
 
