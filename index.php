@@ -2,6 +2,7 @@
 <?php
 error_reporting(E_ALL);
 require_once("config.php");
+require_once("updateRessources.php");
 session_start();
 ?>
 <html>
@@ -242,6 +243,8 @@ session_start();
         function showContent(){
             echo("<h2>Testing Contents</h2><p>Test Content</p>");
             renderVillage();
+            echo ("<p> Test: " . UpdateRessources() . "</p>");
+            UpdateRessources();
         }
 
         function renderVillage() {
@@ -250,16 +253,23 @@ session_start();
                 echo("Could not connect to the databas!");
             }
 
+            $sSelectQuery0 = "SELECT headquarter FROM buildings WHERE userID = 2";
+            $mResult1 = $oMysqli->query($sSelectQuery0);
+
+
             $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = 2;";
             $mResult = $oMysqli->query($sSelectQuery);
 
-            $oMysqli->close();
+
 
             $aRow = mysqli_fetch_assoc($mResult);
-            // echo ("<p>Headquarters: ". $mResult[""] ."</p>");
+            $aRow1 = mysqli_fetch_assoc($mResult1);
+            echo ("<p>Headquarters: ". $aRow1["headquarter"] ."</p>");
             echo ("<p>Woodproduction: ". $aRow["wood"] ."</p>");
             echo ("<p>Stoneproduction: ". $aRow["stone"] ."</p>");
             echo ("<p>Metalproduction: ". $aRow["metal"] ."</p>");
+
+            $oMysqli->close();
         }
 
         function showLoginForm(){

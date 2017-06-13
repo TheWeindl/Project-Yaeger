@@ -14,12 +14,22 @@ function UpdateRessources(){
 		
 		$currentRefresh = date("Y-m-d H:i:s");
 		
-		echo("last   refresh: $lastrefresh\n");
-		echo("curent refresh: $curentrefresh\n");
+		echo("last   refresh: " . $lastRefresh["lastrefresh"]);
+		echo("curent refresh: " . $currentRefresh);
 		
-		$TimeDelta = currentRefresh - lastRefresh;
-		echo("Timedelta: $TimeDelta");
-		return $TimeDelta;
+		// $TimeDelta = $currentRefresh - $lastRefresh;
+
+        // $interval = date_diff($currentRefresh, $lastRefresh["lastrefresh"]);
+
+        // echo $interval->format("%i");
+
+        $timeFirst  = strtotime($currentRefresh);
+        $timeSecond = strtotime($lastRefresh["lastrefresh"]);
+        $differenceInSeconds = ($timeFirst - $timeSecond ) / 60;
+
+
+		echo("Timedelta: $differenceInSeconds");
+		return $differenceInSeconds;
 	}
 }
 ?>
