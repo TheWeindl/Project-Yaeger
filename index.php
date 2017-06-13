@@ -101,7 +101,7 @@ session_start();
     <div class="container testing">
         <p>testing</p>
         <?php
-        if(! $oMySqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
+        if(! $oMySqli = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
             die("Database connection could not be established!");
         } else {
             echo "<p>Connection established</p>";
@@ -109,9 +109,10 @@ session_start();
 
 
 
-        echo ($aVar);
+
         $sSelectQuery = "SELECT * FROM user;";
-        $mResult = $oMysqli->query($sSelectQuery);
+        //$mResult = $oMysqli->query($sSelectQuery);
+        $mResult = mysqli_query($oMySqli, $sSelectQuery);
         echo($mResult);
         while ($aRow = mysqli_fetch_assoc($mResult)) {
             var_dump($aRow);
