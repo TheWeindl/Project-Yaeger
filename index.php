@@ -115,7 +115,7 @@ session_start();
             }
             //case wants to see the page
             else{
-                echo("Logged in! Welcome user".$_SESSION["username"]."<br/>");
+                echo("Logged in! Welcome ".$_SESSION["username"]."<br/>");
                 showLogoutForm();
                 showContent();
             }
@@ -241,10 +241,10 @@ session_start();
 
 
         function showContent(){
-            echo("<h2>Testing Contents</h2><p>Test Content</p>");
+            echo("<h2>Mainpage of the town</h2><p>Town stats</p>");
             renderVillage();
-            echo ("<p> Test: " . UpdateRessources() . "</p>");
-            UpdateRessources();
+            echo ("<p> Minutes since last refresh: " . UpdateRessources() . "</p>");
+            //UpdateRessources();
         }
 
         function renderVillage() {
