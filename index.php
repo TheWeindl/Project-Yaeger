@@ -448,7 +448,7 @@ function showRegistrationForm(){
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="code.js"></script>
 <script>setInterval(function () {
-        <?php UpdateRessources() ?>
+        document.write('<?php updateResources(); ?>');
     },600)</script>
 </body>
 </html>
