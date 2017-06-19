@@ -45,9 +45,9 @@ function UpdateRessources(){
         //Return the passed amount of time in minutes
         return '
         <div class="progress">
-            <div class="progress-bar progress-bar-striped active" id="progressBarMetal" role="progressbar" aria-valuenow="'. $differenceInMinutes*100 .'"
+            <div class="progress-bar progress-bar-striped active" id="progressBarMetal" role="progressbar" aria-valuenow=""
                  aria-valuemin="0" aria-valuemax="100" style="width:'.$differenceInMinutes*100 . '%">
-                <span>'. $differenceInMinutes*100 .'% Complete</span>
+                <span></span>
             </div>
         </div>';
     }

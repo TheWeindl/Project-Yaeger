@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="0b3cebe2-70ef-4a72-a155-18b1b0649061" name="damnserver" url="http://hgb1.damnserver.com">
-        <fileTransfer host="hgb1.damnserver.com" port="22" rootFolder="/var/www/html/project-yaeger" accessType="SFTP">
+      <webServer id="0b3cebe2-70ef-4a72-a155-18b1b0649061" name="damnserver" url="http://192.168.8.103">
+        <fileTransfer host="192.168.8.103" port="22" rootFolder="/var/www/html/project-yaeger" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
