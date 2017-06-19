@@ -1,5 +1,6 @@
 <?php
 Require_once('config.php');
+//Require_once('buildingsSpecs.php');
 
 
 //Upadtes the ressources a player has on his account based on the server time
@@ -34,7 +35,9 @@ function UpdateRessources(){
             GetResources($oMysqli, $wood, $stone, $metal);
             SetResources($oMysqli, $wood + $newResPerMin * $differenceInMinutes, $stone + $newResPerMin * $differenceInMinutes, $metal + $newResPerMin * $differenceInMinutes);
 
-            //echo("<br> Wood: $wood <br> Metal: $metal <br> Stone: $stone <br>");
+            //TODO: Fix issue with variables from another file
+            //echo("<br> Wood: $woodFactoryCost <br> Metal: $metal <br> Stone: $stone <br>");
+
 
             //Update the timestamp
             SetNewTimestamp($oMysqli, $currentRefresh);

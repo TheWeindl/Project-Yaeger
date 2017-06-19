@@ -2,6 +2,9 @@
 //File containing all different buildings and their different levels and values for these levels
 //All data should be contained in arrays to make using the information easy
 
+//global $woodFactoryCost;
+//global $woodFactoryProduction;
+
 //=====================================================================================================================
 // Wood Factory
 //=====================================================================================================================
