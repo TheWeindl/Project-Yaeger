@@ -82,6 +82,7 @@ else{
 
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeHQ") {
         upgradeHQ();
+        showContent();
     }
     //case wants to see the page
     else{
@@ -269,12 +270,19 @@ function upgradeHQ() {
 
     $aRow = mysqli_fetch_assoc($mResult);
     $aRow1 = mysqli_fetch_assoc($mResult1);
+    $newHQ = (int)$aRow1["headquarter"];
+    $newHQ++;
+
     if($aRow["wood"] >= $woodNeeded && $aRow["stone"] >= $stoneNeeded){
-        //TODO upgrade HQ
-        $oMysqli->query("UPDATE ressources SET wood = " . $aRow['wood']-$woodNeeded . ", stone = " . $aRow['stone']-$stoneNeeded . ",  WHERE userID = 2");
-        $oMysqli->query("UPDATE buildings SET headquarter = ". $aRow1["headquarter"]+1 .",  WHERE userID = 2");
+        $newWood = $aRow['wood']-$woodNeeded;
+        $newStone = $aRow['stone']-$stoneNeeded;
+
+        SetResources($oMysqli, $newWood, $newStone, $aRow['metal']);
+        SetHeadquarter($oMysqli, $newHQ);
     } else {
+        // TODO if not enough resources
         echo("not enough resources");
+        echo($newHQ);
     }
 
     $oMysqli->close();

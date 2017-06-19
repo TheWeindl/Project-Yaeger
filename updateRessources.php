@@ -87,4 +87,8 @@ function SetResources($oMysqli, $wood, $stone, $metal){
     //Set resources
     $oMysqli->query("UPDATE ressources SET wood = $wood, stone = $stone, metal = $metal WHERE userID = 2");
 }
+
+function SetHeadquarter($oMysqli, $hq) {
+    var_dump($oMysqli->query("UPDATE buildings SET headquarter = $hq WHERE userID = 2"));
+}
 ?>
