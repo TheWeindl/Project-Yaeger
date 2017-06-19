@@ -5,7 +5,7 @@ let $pbMetal = $("#progressBarMetal");
 let $pbWood = $("#progressBarWood");
 let $pbStone = $("#progressBarStone");
 
-let interval = setInterval(makeProgress, 600);
+//let interval = setInterval(makeProgress, 600);
 let val = 0;
 
 function makeProgress() {

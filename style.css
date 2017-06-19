@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    border-radius: 0 !important;
 }
 
 body {
@@ -18,6 +19,12 @@ header {
 
 nav.navbar.navbar-default {
     border-radius: 0px;
+}
+
+input.logoutBtn {
+    -moz-appearance: none;/* older firefox */
+    -webkit-appearance: none; /* safari, chrome */
+    appearance: none;
 }
 
 main {

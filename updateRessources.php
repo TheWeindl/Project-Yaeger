@@ -8,20 +8,20 @@ function UpdateRessources(){
     $newResPerMin = 10;     //Resources gained every minute -> should later be read out of a table
 
     //Connect to the database
-	if(!$oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)){
-		echo("Could not connect to database");
-	}
+    if(!$oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)){
+        echo("Could not connect to database");
+    }
 
-	//Get a timestamp from when the user last refreshed the page
-	$Result = $oMysqli->query("SELECT lastrefresh FROM userinfo WHERE userID = 2");
+    //Get a timestamp from when the user last refreshed the page
+    $Result = $oMysqli->query("SELECT lastrefresh FROM userinfo WHERE userID = 2");
 
 
-	//If an database entry was returned, calculate the passed seconds from the timestamp till now
-	if($Result && $Result->num_rows > 0){
-		$lastRefresh = mysqli_fetch_assoc($Result);
-		
-		$currentRefresh = date("Y-m-d H:i:s");
-		
+    //If an database entry was returned, calculate the passed seconds from the timestamp till now
+    if($Result && $Result->num_rows > 0){
+        $lastRefresh = mysqli_fetch_assoc($Result);
+
+        $currentRefresh = date("Y-m-d H:i:s");
+
         $timeFirst  = strtotime($currentRefresh);
         $timeSecond = strtotime($lastRefresh["lastrefresh"]);
         $differenceInMinutes = ($timeFirst - $timeSecond ) / 60;
@@ -43,8 +43,14 @@ function UpdateRessources(){
         mysqli_close($oMysqli);
 
         //Return the passed amount of time in minutes
-		return $differenceInMinutes;
-	}
+        return '
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped active" id="progressBarMetal" role="progressbar" aria-valuenow="'. $differenceInMinutes*100 .'"
+                 aria-valuemin="0" aria-valuemax="100" style="width:'.$differenceInMinutes*100 . '%">
+                <span class="sr-only">'. $differenceInMinutes*100 .'% Complete</span>
+            </div>
+        </div>';
+    }
 
     mysqli_close($oMysqli);
 }
