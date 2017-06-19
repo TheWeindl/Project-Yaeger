@@ -1,11 +1,15 @@
 <?php
 Require_once('config.php');
-//Require_once('buildingsSpecs.php');
-
+Require_once('buildingsSpecs.php');
 
 //Upadtes the ressources a player has on his account based on the server time
 //Calculation unit are minutes
 function UpdateRessources(){
+
+    global $woodFactoryProduction;
+    global $stoneFactoryProduction;
+    global $metalFactoryProduction;
+
     $newResPerMin = 10;     //Resources gained every minute -> should later be read out of a table
 
     //Connect to the database
@@ -13,9 +17,10 @@ function UpdateRessources(){
         echo("Could not connect to database");
     }
 
-    //Get a timestamp from when the user last refreshed the page
-    $Result = $oMysqli->query("SELECT lastrefresh FROM userinfo WHERE userID = 2");
+    $levels = GetFactoryLevels($oMysqli);
 
+    //Get a timestamp from when the user last refreshed the page
+    $Result = $oMysqli->query("SELECT lastrefresh FROM userinfo WHERE userID = {$_SESSION["userID"]}");
 
     //If an database entry was returned, calculate the passed seconds from the timestamp till now
     if($Result && $Result->num_rows > 0){
@@ -33,11 +38,10 @@ function UpdateRessources(){
 
             //Get the current resource values and set the new ones
             GetResources($oMysqli, $wood, $stone, $metal);
-            SetResources($oMysqli, $wood + $newResPerMin * $differenceInMinutes, $stone + $newResPerMin * $differenceInMinutes, $metal + $newResPerMin * $differenceInMinutes);
-
-            //TODO: Fix issue with variables from another file
-            //echo("<br> Wood: $woodFactoryCost <br> Metal: $metal <br> Stone: $stone <br>");
-
+            SetResources($oMysqli,
+                $wood + $woodFactoryProduction[(int)$levels["woodFactory"]] * $differenceInMinutes,
+                $stone + $stoneFactoryProduction[(int)$levels["stoneFactory"]] * $differenceInMinutes,
+                $metal + $metalFactoryProduction[(int)$levels["metalFactory"]] * $differenceInMinutes);
 
             //Update the timestamp
             SetNewTimestamp($oMysqli, $currentRefresh);
@@ -48,7 +52,7 @@ function UpdateRessources(){
         //Return the passed amount of time in minutes
         return '
         <div class="progress">
-            <div class="progress-bar progress-bar-striped active" id="progressBarMetal" role="progressbar" aria-valuenow=""
+            <div class="progress-bar progress-bar-striped active" id="progressBarMetal" role="progressbar" aria-valuenow="'. $differenceInMinutes*100 .'"
                  aria-valuemin="0" aria-valuemax="100" style="width:'.$differenceInMinutes*100 . '%">
                 <span></span>
             </div>
@@ -61,14 +65,14 @@ function UpdateRessources(){
 //Sets the given timestamp as the last refreshed timestamp in the database
 function SetNewTimestamp($oMysqli, $currentTimestamp){
 
-    $oMysqli->query("UPDATE userinfo SET lastrefresh='$currentTimestamp' WHERE userID = 2");
+    $oMysqli->query("UPDATE userinfo SET lastrefresh='$currentTimestamp' WHERE userID = {$_SESSION["userID"]}");
 }
 
 //Gets the resources of of the user
 function GetResources($oMysqli, &$wood, &$stone, &$metal){
 
     //Get all resources of the user
-    $Result = $oMysqli->query("SELECT * FROM ressources WHERE userID = 2");
+    $Result = $oMysqli->query("SELECT * FROM ressources WHERE userID = {$_SESSION["userID"]}");
 
     //Check if the request was successful
     if($Result && $Result->num_rows > 0){
@@ -88,10 +92,18 @@ function GetResources($oMysqli, &$wood, &$stone, &$metal){
 function SetResources($oMysqli, $wood, $stone, $metal){
 
     //Set resources
-    $oMysqli->query("UPDATE ressources SET wood = $wood, stone = $stone, metal = $metal WHERE userID = 2");
+    $oMysqli->query("UPDATE ressources SET wood = $wood, stone = $stone, metal = $metal WHERE userID = {$_SESSION["userID"]}");
 }
 
 function SetHeadquarter($oMysqli, $hq) {
-    var_dump($oMysqli->query("UPDATE buildings SET headquarter = $hq WHERE userID = 2"));
+
+    $oMysqli->query("UPDATE buildings SET headquarter = $hq WHERE userID = {$_SESSION["userID"]} ");
+}
+
+function GetFactoryLevels($oMysqli){
+    $sLevelQuery = "SELECT woodFactory, stoneFactory, metalFactory FROM buildings WHERE userID = {$_SESSION["userID"]}";
+    $res = $oMysqli->query($sLevelQuery);
+
+    return mysqli_fetch_array($res);
 }
 ?>

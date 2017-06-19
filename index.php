@@ -3,8 +3,10 @@
 error_reporting(E_ALL);
 require_once("config.php");
 require_once("updateRessources.php");
+require_once("registerUser.php");
 session_start();
 ?>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -122,25 +124,6 @@ function loginDataCorrect($sUsername, $sPassword){
     else return false;
 }
 
-function register($sUsername, $sPassword1, $sEmail){
-    echo("User is going to be registered soon<br/>");
-    // open connection to db server and selcting the db
-    if(! $oMySqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
-        die("Database connection could not be established!");
-    }
-
-    // TODO SQL statement
-    $sInsert = "INSERT INTO user (username, userpw, useremail) VALUES ('".$oMySqli->real_escape_string($sUsername)."', '". password_hash($sPassword1, PASSWORD_DEFAULT) ."', '". $oMySqli->real_escape_string($sEmail)."');";
-    $sResult = $oMySqli->query($sInsert);
-
-    // close connection to db server
-    if(!$oMySqli->close()) {
-        echo("Database connection could not be closed");
-    }
-
-    // echo($sResult);
-}
-
 function registrationDataCorrect(){
     global$aError;
     //username must be unique
@@ -234,11 +217,10 @@ function renderVillage() {
         echo("Could not connect to the databas!");
     }
 
-    $sSelectQuery0 = "SELECT headquarter FROM buildings WHERE userID = 2";
+    $sSelectQuery0 = "SELECT * FROM buildings WHERE userID = {$_SESSION['userID']}";
     $mResult1 = $oMysqli->query($sSelectQuery0);
 
-
-    $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = 2;";
+    $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = {$_SESSION['userID']};";
     $mResult = $oMysqli->query($sSelectQuery);
 
 
@@ -246,10 +228,13 @@ function renderVillage() {
     $aRow = mysqli_fetch_assoc($mResult);
     $aRow1 = mysqli_fetch_assoc($mResult1);
     echo ("<p>Headquarters: ". $aRow1["headquarter"] ."</p>");
+    echo ("<p>WoodFactory: ". $aRow1["woodFactory"] ."</p>");
+    echo ("<p>StoneFactory: ". $aRow1["stoneFactory"] ."</p>");
+    echo ("<p>MetalFactory: ". $aRow1["metalFactory"] ."</p>");
     echo("<a href='index.php?action=upgradeHQ'>upgrade HQ</a>");
-    echo ("<p>Woodproduction: ". $aRow["wood"] ."</p>");
-    echo ("<p>Stoneproduction: ". $aRow["stone"] ."</p>");
-    echo ("<p>Metalproduction: ". $aRow["metal"] ."</p>");
+    echo ("<p>Wood: ". $aRow["wood"] ."</p>");
+    echo ("<p>Stone: ". $aRow["stone"] ."</p>");
+    echo ("<p>Metal: ". $aRow["metal"] ."</p>");
 
     $oMysqli->close();
 }
@@ -262,10 +247,10 @@ function upgradeHQ() {
         echo("Could not connect to the databas!");
     }
 
-    $sSelectQuery0 = "SELECT headquarter FROM buildings WHERE userID = 2";
+    $sSelectQuery0 = "SELECT headquarter FROM buildings WHERE userID = {$_SESSION['userID']}";
     $mResult1 = $oMysqli->query($sSelectQuery0);
     //
-    $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = 2;";
+    $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = {$_SESSION['userID']};";
     $mResult = $oMysqli->query($sSelectQuery);
 
     $aRow = mysqli_fetch_assoc($mResult);
@@ -485,8 +470,5 @@ function showRegistrationForm(){
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="code.js"></script>
-<script>setInterval(function () {
-        document.write('<?php updateResources(); ?>');
-    },600)</script>
 </body>
 </html>
