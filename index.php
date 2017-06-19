@@ -80,6 +80,8 @@ else{
         showLoginForm();
         showRegistrationForm();
 
+    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeHQ") {
+        upgradeHQ();
     }
     //case wants to see the page
     else{
@@ -243,9 +245,33 @@ function renderVillage() {
     $aRow = mysqli_fetch_assoc($mResult);
     $aRow1 = mysqli_fetch_assoc($mResult1);
     echo ("<p>Headquarters: ". $aRow1["headquarter"] ."</p>");
+    echo("<a href='index.php?action=upgradeHQ'>upgrade HQ</a>");
     echo ("<p>Woodproduction: ". $aRow["wood"] ."</p>");
     echo ("<p>Stoneproduction: ". $aRow["stone"] ."</p>");
     echo ("<p>Metalproduction: ". $aRow["metal"] ."</p>");
+
+    $oMysqli->close();
+}
+
+function upgradeHQ() {
+    $woodNeeded = 1000;
+    $stoneNeeded = 1000;
+
+    if(! $oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
+        echo("Could not connect to the databas!");
+    }
+
+    //
+    $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = 2;";
+    $mResult = $oMysqli->query($sSelectQuery);
+
+    $aRow = mysqli_fetch_assoc($mResult);
+    if($aRow["wood"] >= $woodNeeded && $aRow["stone"] >= $stoneNeeded){
+        //TODO upgrade HQ
+        $oMysqli->query("UPDATE ressources SET wood = " . $aRow['wood'] . ", stone = $stone, metal = $metal WHERE userID = 2");
+    } else {
+        echo("not enough resources");
+    }
 
     $oMysqli->close();
 }
