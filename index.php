@@ -261,14 +261,18 @@ function upgradeHQ() {
         echo("Could not connect to the databas!");
     }
 
+    $sSelectQuery0 = "SELECT headquarter FROM buildings WHERE userID = 2";
+    $mResult1 = $oMysqli->query($sSelectQuery0);
     //
     $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = 2;";
     $mResult = $oMysqli->query($sSelectQuery);
 
     $aRow = mysqli_fetch_assoc($mResult);
+    $aRow1 = mysqli_fetch_assoc($mResult1);
     if($aRow["wood"] >= $woodNeeded && $aRow["stone"] >= $stoneNeeded){
         //TODO upgrade HQ
-        $oMysqli->query("UPDATE ressources SET wood = " . $aRow['wood'] . ", stone = $stone, metal = $metal WHERE userID = 2");
+        $oMysqli->query("UPDATE ressources SET wood = " . $aRow['wood']-$woodNeeded . ", stone = " . $aRow['stone']-$stoneNeeded . ",  WHERE userID = 2");
+        $oMysqli->query("UPDATE buildings SET headquarter = ". $aRow1["headquarter"]+1 .",  WHERE userID = 2");
     } else {
         echo("not enough resources");
     }
