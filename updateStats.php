@@ -123,19 +123,81 @@ function UpdateBuilding($building){
     //= "SELECT userID FROM user WHERE username = '{$username}'";
 
     if($building == "headquarter" || $building == "woodFactory" || $building == "stoneFactory" || $building == "metalFactory"){
+
         $query = "SELECT $building FROM buildings WHERE userID = '{$_SESSION['userID']}'";
         $Res = $oMySqli->query($query);
 
         $data = mysqli_fetch_array($Res);
         $newLevel = $data[$building] + 1;
 
-        //TODO: Resourcen vorhanden prüfen
-
-
-        $query = "UPDATE $building SET $newLevel WHERE userID = '{$_SESSION['userID']}'";
-        return $oMySqli->query($query);
+        if(CheckResources($oMySqli, $building, $data[$building])){
+            $query = "UPDATE buildings SET $building = $newLevel WHERE userID = '{$_SESSION['userID']}'";
+            $Res = $oMySqli->query($query);
+        }
+        else{
+            //TODO: Not enough resources at that point ... do something
+            echo("Not enough resources ... you idiot");
+        }
     }
     else{
+        echo("Not a valid building name");
+        return false;
+    }
+}
+
+//Checks if the resources are available to upgradet the building to the given level
+function CheckResources($oMysqli, $building, $level) {
+
+    global $woodFactoryCost;
+    global $stoneFactoryCost;
+    global $metalFactoryCost;
+    global $headquarterCost;
+
+    $woodNeeded = 0;
+    $stoneNeeded = 0;
+    $metalNeeded = 0;
+
+    //Set the costs for the building upgrade
+    if($building == "woodFactory"){
+        $woodNeeded = $woodFactoryCost[$level]["wood"];
+        $stoneNeeded = $woodFactoryCost[$level]["stone"];
+        $metalNeeded = $woodFactoryCost[$level]["metal"];
+    }
+    else if($building == "stoneFactory"){
+        $woodNeeded = $stoneFactoryCost[$level]["wood"];
+        $stoneNeeded = $stoneFactoryCost[$level]["stone"];
+        $metalNeeded = $stoneFactoryCost[$level]["metal"];
+    }
+    else if($building == "metalFactory"){
+        $woodNeeded = $metalFactoryCost[$level]["wood"];
+        $stoneNeeded = $metalFactoryCost[$level]["stone"];
+        $metalNeeded = $metalFactoryCost[$level]["metal"];
+    }
+    else if($building == "headquarter"){
+        $woodNeeded = $headquarterCost[$level]["wood"];
+        $stoneNeeded = $headquarterCost[$level]["stone"];
+        $metalNeeded = $headquarterCost[$level]["metal"];
+    }
+
+
+    //Get current resources
+    $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = {$_SESSION['userID']};";
+    $mResult = $oMysqli->query($sSelectQuery);
+
+    $resArr = mysqli_fetch_assoc($mResult);
+
+    //Check if resources are enought to upgrade the building
+    if($resArr["wood"] >= $woodNeeded && $resArr["stone"] >= $stoneNeeded && $resArr["metal"] >= $metalNeeded){
+        $newWood = $resArr['wood']-$woodNeeded;
+        $newStone = $resArr['stone']-$stoneNeeded;
+        $newMetal = $resArr['metal']-$metalNeeded;
+
+        SetResources($oMysqli, $newWood, $newStone, $newMetal);
+        return true;
+
+    } else {
+
+        //Error needs to be caught where the function gets called
         return false;
     }
 }

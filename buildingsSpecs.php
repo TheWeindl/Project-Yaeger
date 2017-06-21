@@ -69,8 +69,16 @@ $stoneFactoryCost = array(
 );
 
 //=====================================================================================================================
-// Headquarters
+// Headquarter
 //=====================================================================================================================
-//TODO: Add values for the headquarters
+//Costs of the upgrades of the factory
+//First index is the level of the building currently set
+$headquarterCost = array(
+    1 => array( "wood" => 1000,  "stone" => 1000,  "metal" => 0),
+    2 => array( "wood" => 3000,  "stone" => 3500,  "metal" => 0),
+    3 => array( "wood" => 6000,  "stone" => 7000,  "metal" => 0),
+    4 => array( "wood" => 13000, "stone" => 11000, "metal" => 2000),
+    5 => array( "wood" => 20000, "stone" => 19000, "metal" => 4000),
+);
 
 ?>
