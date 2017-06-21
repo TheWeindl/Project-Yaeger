@@ -9,6 +9,7 @@ function register($sUsername, $sPassword1, $sEmail){
         die("Database connection could not be established!");
     }
 
+    //Set the new user into the database
     $sInsert = "INSERT INTO user (username, userpw, useremail) 
                 VALUES ('".$oMySqli->real_escape_string($sUsername)."',
                 '". password_hash($sPassword1, PASSWORD_DEFAULT) ."',
@@ -29,6 +30,7 @@ function register($sUsername, $sPassword1, $sEmail){
     }
 }
 
+//Prepares the needed fields in the userinfo table
 function SetUserInfo($oMysqli){
 
     $sSetTimeStamp = "INSERT INTO userinfo (userID, lastrefresh, coordX, coordY) 
@@ -36,6 +38,7 @@ function SetUserInfo($oMysqli){
     $oMysqli->query($sSetTimeStamp);
 }
 
+//Prepares the needed fields in the resources table
 function SetStartResources($oMysqli){
 
     global $startResources;
@@ -45,6 +48,7 @@ function SetStartResources($oMysqli){
     $oMysqli->query($sSetResources);
 }
 
+//Prepares the needed fields in the buildings table
 function SetBuildings($oMysqli){
 
     $sSetBuildings = "INSERT INTO buildings (userID, headquarter, woodFactory, stoneFactory, metalFactory) 
