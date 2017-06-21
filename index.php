@@ -86,10 +86,10 @@ else{
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeHQ") {
         UpdateBuilding("headquarter");
         showContent();
-    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeStone") {
+    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeWood") {
         UpdateBuilding("woodFactory");
         showContent();
-    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeWood") {
+    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeStone") {
         UpdateBuilding("stoneFactory");
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeMetal") {
