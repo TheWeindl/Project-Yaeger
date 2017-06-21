@@ -206,23 +206,6 @@ function isUnique($sUsername){
 
 function showContent(){
     showHeaderForLoggedIn();
-    ?>
-    <div class="container">
-        <div class="panel panel-default">
-            <div class="panel-heading">Your Town</div>
-            <div class="panel-body">
-                <?php
-                renderVillage();
-                echo ("<p> Minutes since last refresh: " . UpdateRessources() . "</p>");
-                ?>
-            </div>
-        </div>
-    </div>
-    <?php
-}
-
-function renderVillage() {
-
     if(! $oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
         echo("Could not connect to the databas!");
     }
@@ -237,69 +220,102 @@ function renderVillage() {
 
     $aRow = mysqli_fetch_assoc($mResult);
     $aRow1 = mysqli_fetch_assoc($mResult1);
-    // echo ("<p>Headquarters: ". $aRow1["headquarter"] ."</p>");
+    ?>
+    <div class="main">
+        <?php
+        renderVillage($aRow1);
+        renderResources($aRow);
+        ?>
+    </div>
+    <?php
+    $oMysqli->close();
+}
+
+function renderVillage($aRow1) {
     ?>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">Headquarter</div>
-        <div class="panel-body">
-            <p>Level: <?php echo($aRow1["headquarter"]) ?></p>
-        </div>
-        <div class="panel-footer">
-            <form action="index.php">
-                <input type="hidden" name="action" value="upgradeHQ" />
-                <input type="submit" class="btn btn-default " value="upgradeHQ">
-            </form>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">Your Town</div>
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Headquarter</div>
+                    <div class="panel-body">
+                        <p>Level: <?php echo($aRow1["headquarter"]) ?></p>
+                    </div>
+                    <div class="panel-footer">
+                        <form action="index.php" method="post">
+                            <input type="hidden" name="action" value="upgradeHQ" />
+                            <input type="submit" class="btn btn-default " value="upgradeHQ">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Wood Factory</div>
+                    <div class="panel-body">
+                        <p>Level: <?php echo($aRow1["woodFactory"]) ?></p>
+                    </div>
+                    <div class="panel-footer">
+                        <form action="index.php" method="post">
+                            <input type="hidden" name="action" value="upgradeWood" />
+                            <input type="submit" class="btn btn-default " value="upgradeWood">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Stone Factory</div>
+                    <div class="panel-body">
+                        <p>Level: <?php echo($aRow1["stoneFactory"]) ?></p>
+                    </div>
+                    <div class="panel-footer">
+                        <form action="index.php" method="post">
+                            <input type="hidden" name="action" value="upgradeStone" />
+                            <input type="submit" class="btn btn-default " value="upgradeStone">
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Metal Factory</div>
+                    <div class="panel-body">
+                        <p>Level: <?php echo($aRow1["metalFactory"]) ?></p>
+                    </div>
+                    <div class="panel-footer">
+                        <form action="index.php" method="post">
+                            <input type="hidden" name="action" value="upgradeMetal" />
+                            <input type="submit" class="btn btn-default " value="upgradeMetal">
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">Wood Factory</div>
-        <div class="panel-body">
-            <p>Level: <?php echo($aRow1["woodFactory"]) ?></p>
-        </div>
-        <div class="panel-footer">
-            <form action="index.php">
-                <input type="hidden" name="action" value="upgradeWood" />
-                <input type="submit" class="btn btn-default " value="upgradeWood">
-            </form>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">Stone Factory</div>
-        <div class="panel-body">
-            <p>Level: <?php echo($aRow1["stoneFactory"]) ?></p>
-        </div>
-        <div class="panel-footer">
-            <form action="index.php">
-                <input type="hidden" name="action" value="upgradeStone" />
-                <input type="submit" class="btn btn-default " value="upgradeStone">
-            </form>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">Metal Factory</div>
-        <div class="panel-body">
-            <p>Level: <?php echo($aRow1["metalFactory"]) ?></p>
-        </div>
-        <div class="panel-footer">
-            <form action="index.php">
-                <input type="hidden" name="action" value="upgradeMetal" />
-                <input type="submit" class="btn btn-default " value="upgradeMetal">
-            </form>
-        </div>
-    </div>
-
-
 
     <?php
-    echo ("<p>Wood: ". $aRow["wood"] ."</p>");
-    echo ("<p>Stone: ". $aRow["stone"] ."</p>");
-    echo ("<p>Metal: ". $aRow["metal"] ."</p>");
+}
 
-    $oMysqli->close();
+function renderResources($aRow) {
+    ?>
+    <div class="container resource-production">
+        <div class="panel panel-default">
+            <div class="panel-heading">Resource Production</div>
+            <div class="panel-body">
+                <?php
+                echo ("<p>Wood: ". $aRow["wood"] ."</p>");
+                echo ("<p>Stone: ". $aRow["stone"] ."</p>");
+                echo ("<p>Metal: ". $aRow["metal"] ."</p>");
+                ?>
+            </div>
+            <div class="panel-footer">
+                <?php
+                echo(UpdateRessources());
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
 }
 
 function showLoginForm(){

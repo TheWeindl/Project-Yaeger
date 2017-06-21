@@ -36,6 +36,18 @@ main {
     padding-right: 10vw;
 }
 
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 40%;
+    align-self: center;
+}
+
+.resource-production {
+
+}
+
 .progress-bar {
     transition: width 1s ease;
 }
