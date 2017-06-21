@@ -20,7 +20,7 @@ function UpdateRessources(){
     $levels = GetFactoryLevels($oMysqli);
 
     //Get a timestamp from when the user last refreshed the page
-    $Result = $oMysqli->query("SELECT lastrefresh FROM userinfo WHERE userID = {$_SESSION["userID"]}");
+    $Result = $oMysqli->query("SELECT lastrefresh FROM userinfo WHERE userID = {$_SESSION['userID']}");
 
     //If an database entry was returned, calculate the passed seconds from the timestamp till now
     if($Result && $Result->num_rows > 0){
@@ -34,7 +34,6 @@ function UpdateRessources(){
 
         //If time delta is bigger than 1 minute the update resources
         if($differenceInMinutes >= 1){
-            echo("More than one minute passed since last refresh\n");
 
             //Get the current resource values and set the new ones
             GetResources($oMysqli, $wood, $stone, $metal);
@@ -57,6 +56,11 @@ function UpdateRessources(){
                 <span></span>
             </div>
         </div>';
+    }
+    else
+    {
+       echo("Database query went wrong");
+       var_dump($Result);
     }
 
     mysqli_close($oMysqli);

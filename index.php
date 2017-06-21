@@ -1,12 +1,12 @@
-<!DOCTYPE html>
 <?php
+session_start();
 error_reporting(E_ALL);
 require_once("config.php");
 require_once("updateRessources.php");
 require_once("registerUser.php");
-session_start();
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -31,6 +31,7 @@ if(!isset($_SESSION["username"])){
             //true
             //login in Session
             $_SESSION["username"] = $_REQUEST["username"];
+            $_SESSION["userID"] = GetUserID($_REQUEST["username"]);
             //show content
             showContent();
             //showLogoutForm();
