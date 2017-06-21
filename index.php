@@ -84,16 +84,16 @@ else{
         showRegistrationForm();
 
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeHQ") {
-        UpdateRessources("headquarter");
+        UpdateBuilding("headquarter");
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeStone") {
-        UpdateRessources("woodFactory");
+        UpdateBuilding("woodFactory");
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeWood") {
-        UpdateRessources("stoneFactory");
+        UpdateBuilding("stoneFactory");
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeMetal") {
-        UpdateRessources("metalFactory");
+        UpdateBuilding("metalFactory");
         showContent();
     }
     //case wants to see the page
@@ -298,40 +298,6 @@ function renderVillage() {
     echo ("<p>Wood: ". $aRow["wood"] ."</p>");
     echo ("<p>Stone: ". $aRow["stone"] ."</p>");
     echo ("<p>Metal: ". $aRow["metal"] ."</p>");
-
-    $oMysqli->close();
-}
-
-function upgradeHQ() {
-    $woodNeeded = 1000;
-    $stoneNeeded = 1000;
-
-    if(! $oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
-        echo("Could not connect to the databas!");
-    }
-
-    $sSelectQuery0 = "SELECT headquarter FROM buildings WHERE userID = {$_SESSION['userID']}";
-    $mResult1 = $oMysqli->query($sSelectQuery0);
-    //
-    $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = {$_SESSION['userID']};";
-    $mResult = $oMysqli->query($sSelectQuery);
-
-    $aRow = mysqli_fetch_assoc($mResult);
-    $aRow1 = mysqli_fetch_assoc($mResult1);
-    $newHQ = (int)$aRow1["headquarter"];
-    $newHQ++;
-
-    if($aRow["wood"] >= $woodNeeded && $aRow["stone"] >= $stoneNeeded){
-        $newWood = $aRow['wood']-$woodNeeded;
-        $newStone = $aRow['stone']-$stoneNeeded;
-
-        SetResources($oMysqli, $newWood, $newStone, $aRow['metal']);
-        SetHeadquarter($oMysqli, $newHQ);
-    } else {
-        // TODO if not enough resources
-        echo("not enough resources");
-        echo($newHQ);
-    }
 
     $oMysqli->close();
 }
