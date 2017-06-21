@@ -232,6 +232,7 @@ function showContent(){
     ?>
     <div class="main">
         <?php
+        UpdateRessources();
         renderVillage($aRow1);
         renderResources($aRow);
         ?>
