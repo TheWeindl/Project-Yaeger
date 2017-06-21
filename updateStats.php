@@ -2,7 +2,7 @@
 Require_once('config.php');
 Require_once('buildingsSpecs.php');
 
-//Upadtes the ressources a player has on his account based on the server time
+//Updates the resources a player has on his account based on the server time
 //Calculation unit are minutes
 function UpdateRessources(){
 
@@ -60,7 +60,6 @@ function UpdateRessources(){
     else
     {
        echo("Database query went wrong");
-       var_dump($Result);
     }
 
     mysqli_close($oMysqli);
@@ -99,11 +98,6 @@ function SetResources($oMysqli, $wood, $stone, $metal){
     $oMysqli->query("UPDATE ressources SET wood = $wood, stone = $stone, metal = $metal WHERE userID = {$_SESSION["userID"]}");
 }
 
-/*function SetHeadquarter($oMysqli, $hq) {
-
-    $oMysqli->query("UPDATE buildings SET headquarter = $hq WHERE userID = {$_SESSION["userID"]} ");
-}*/
-
 function GetFactoryLevels($oMysqli){
     $sLevelQuery = "SELECT woodFactory, stoneFactory, metalFactory FROM buildings WHERE userID = {$_SESSION["userID"]}";
     $res = $oMysqli->query($sLevelQuery);
@@ -119,9 +113,7 @@ function UpdateBuilding($building){
         die("Database connection could not be established!");
     }
 
-    $query = "";
-    //= "SELECT userID FROM user WHERE username = '{$username}'";
-
+    //Check if the given string was a valid building
     if($building == "headquarter" || $building == "woodFactory" || $building == "stoneFactory" || $building == "metalFactory"){
 
         $query = "SELECT $building FROM buildings WHERE userID = '{$_SESSION['userID']}'";
@@ -130,6 +122,7 @@ function UpdateBuilding($building){
         $data = mysqli_fetch_array($Res);
         $newLevel = $data[$building] + 1;
 
+        //Check if enough resources are available for the upgrade
         if(CheckResources($oMySqli, $building, $data[$building])){
             $query = "UPDATE buildings SET $building = $newLevel WHERE userID = '{$_SESSION['userID']}'";
             $Res = $oMySqli->query($query);
