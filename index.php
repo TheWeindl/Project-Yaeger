@@ -2,7 +2,7 @@
 session_start();
 error_reporting(E_ALL);
 require_once("config.php");
-require_once("updateRessources.php");
+require_once("updateStats.php");
 require_once("registerUser.php");
 ?>
 
@@ -84,7 +84,16 @@ else{
         showRegistrationForm();
 
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeHQ") {
-        upgradeHQ();
+        UpdateRessources("headquarter");
+        showContent();
+    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeStone") {
+        UpdateRessources("woodFactory");
+        showContent();
+    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeWood") {
+        UpdateRessources("stoneFactory");
+        showContent();
+    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeMetal") {
+        UpdateRessources("metalFactory");
         showContent();
     }
     //case wants to see the page
@@ -228,19 +237,64 @@ function renderVillage() {
 
     $aRow = mysqli_fetch_assoc($mResult);
     $aRow1 = mysqli_fetch_assoc($mResult1);
-    echo ("<p>Headquarters: ". $aRow1["headquarter"] ."</p>");
+    // echo ("<p>Headquarters: ". $aRow1["headquarter"] ."</p>");
     ?>
 
-    <form action="upgradeHQ">
-        <input type="button" value="upgradeHQ">
-    </form>
+    <div class="panel panel-default">
+        <div class="panel-heading">Headquarter</div>
+        <div class="panel-body">
+            <p>Level: <?php echo($aRow1["headquarter"]) ?></p>
+        </div>
+        <div class="panel-footer">
+            <form action="index.php">
+                <input type="hidden" name="action" value="upgradeHQ" />
+                <input type="submit" class="btn btn-default " value="upgradeHQ">
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Wood Factory</div>
+        <div class="panel-body">
+            <p>Level: <?php echo($aRow1["woodFactory"]) ?></p>
+        </div>
+        <div class="panel-footer">
+            <form action="index.php">
+                <input type="hidden" name="action" value="upgradeWood" />
+                <input type="submit" class="btn btn-default " value="upgradeWood">
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Stone Factory</div>
+        <div class="panel-body">
+            <p>Level: <?php echo($aRow1["stoneFactory"]) ?></p>
+        </div>
+        <div class="panel-footer">
+            <form action="index.php">
+                <input type="hidden" name="action" value="upgradeStone" />
+                <input type="submit" class="btn btn-default " value="upgradeStone">
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Metal Factory</div>
+        <div class="panel-body">
+            <p>Level: <?php echo($aRow1["metalFactory"]) ?></p>
+        </div>
+        <div class="panel-footer">
+            <form action="index.php">
+                <input type="hidden" name="action" value="upgradeMetal" />
+                <input type="submit" class="btn btn-default " value="upgradeMetal">
+            </form>
+        </div>
+    </div>
+
+
 
     <?php
-    echo("<a href='index.php?action=upgradeHQ'>upgrade HQ</a>");
-
-    echo ("<p>WoodFactory: ". $aRow1["woodFactory"] ."</p>");
-    echo ("<p>StoneFactory: ". $aRow1["stoneFactory"] ."</p>");
-    echo ("<p>MetalFactory: ". $aRow1["metalFactory"] ."</p>");
     echo ("<p>Wood: ". $aRow["wood"] ."</p>");
     echo ("<p>Stone: ". $aRow["stone"] ."</p>");
     echo ("<p>Metal: ". $aRow["metal"] ."</p>");
