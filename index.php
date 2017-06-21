@@ -32,6 +32,7 @@ if(!isset($_SESSION["username"])){
             //login in Session
             $_SESSION["username"] = $_REQUEST["username"];
             $_SESSION["userID"] = GetUserID($_REQUEST["username"]);
+            $_REQUEST["action"] = "";
             //show content
             showContent();
             //showLogoutForm();
@@ -79,21 +80,26 @@ else{
     //case wants to log out
     if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "logout"){
         unset($_SESSION["username"]);
+        $_REQUEST["action"] = "";
         showHeaderForStart();
         showLoginForm();
         showRegistrationForm();
 
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeHQ") {
         UpdateBuilding("headquarter");
+        $_REQUEST["action"] = "";
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeWood") {
         UpdateBuilding("woodFactory");
+        $_REQUEST["action"] = "";
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeStone") {
         UpdateBuilding("stoneFactory");
+        $_REQUEST["action"] = "";
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeMetal") {
         UpdateBuilding("metalFactory");
+        $_REQUEST["action"] = "";
         showContent();
     }
     //case wants to see the page
