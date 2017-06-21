@@ -99,15 +99,44 @@ function SetResources($oMysqli, $wood, $stone, $metal){
     $oMysqli->query("UPDATE ressources SET wood = $wood, stone = $stone, metal = $metal WHERE userID = {$_SESSION["userID"]}");
 }
 
-function SetHeadquarter($oMysqli, $hq) {
+/*function SetHeadquarter($oMysqli, $hq) {
 
     $oMysqli->query("UPDATE buildings SET headquarter = $hq WHERE userID = {$_SESSION["userID"]} ");
-}
+}*/
 
 function GetFactoryLevels($oMysqli){
     $sLevelQuery = "SELECT woodFactory, stoneFactory, metalFactory FROM buildings WHERE userID = {$_SESSION["userID"]}";
     $res = $oMysqli->query($sLevelQuery);
 
     return mysqli_fetch_array($res);
+}
+
+//Upgrade the building with the given name in the database
+function UpdateBuilding($building){
+
+    // open connection to db server and selcting the db
+    if(! $oMySqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
+        die("Database connection could not be established!");
+    }
+
+    $query = "";
+    //= "SELECT userID FROM user WHERE username = '{$username}'";
+
+    if($building == "headquarter" || $building == "woodFactory" || $building == "stoneFactory" || $building == "metalFactory"){
+        $query = "SELECT $building FROM buildings WHERE userID = '{$_SESSION['userID']}'";
+        $Res = $oMySqli->query($query);
+
+        $data = mysqli_fetch_array($Res);
+        $newLevel = $data[$building] + 1;
+
+        //TODO: Resourcen vorhanden prüfen
+
+
+        $query = "UPDATE $building SET $newLevel WHERE userID = '{$_SESSION['userID']}'";
+        return $oMySqli->query($query);
+    }
+    else{
+        return false;
+    }
 }
 ?>
