@@ -13,7 +13,7 @@ require_once("registerUser.php");
     <title>project-yaeger</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -125,7 +125,6 @@ function loginDataCorrect($sUsername, $sPassword){
     if($mResult && $mResult->num_rows > 0){
 
         $aResult = mysqli_fetch_assoc($mResult);
-        //var_dump($aResult);
         if(password_verify($sPassword, $aResult["userpw"])){
             return true;
         }
@@ -514,6 +513,6 @@ function showRegistrationForm(){
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="code.js"></script>
+<script src="assets/js/code.js"></script>
 </body>
 </html>
