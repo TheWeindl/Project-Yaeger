@@ -229,10 +229,18 @@ function renderVillage() {
     $aRow = mysqli_fetch_assoc($mResult);
     $aRow1 = mysqli_fetch_assoc($mResult1);
     echo ("<p>Headquarters: ". $aRow1["headquarter"] ."</p>");
+    ?>
+
+    <form action="upgradeHQ">
+        <input type="button" value="upgradeHQ">
+    </form>
+
+    <?php
+    echo("<a href='index.php?action=upgradeHQ'>upgrade HQ</a>");
+
     echo ("<p>WoodFactory: ". $aRow1["woodFactory"] ."</p>");
     echo ("<p>StoneFactory: ". $aRow1["stoneFactory"] ."</p>");
     echo ("<p>MetalFactory: ". $aRow1["metalFactory"] ."</p>");
-    echo("<a href='index.php?action=upgradeHQ'>upgrade HQ</a>");
     echo ("<p>Wood: ". $aRow["wood"] ."</p>");
     echo ("<p>Stone: ". $aRow["stone"] ."</p>");
     echo ("<p>Metal: ". $aRow["metal"] ."</p>");
