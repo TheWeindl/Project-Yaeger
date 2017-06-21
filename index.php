@@ -87,18 +87,22 @@ else{
 
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeHQ") {
         UpdateBuilding("headquarter");
+        unset($_REQUEST["action"]);
         $_REQUEST["action"] = "";
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeWood") {
         UpdateBuilding("woodFactory");
+        unset($_REQUEST["action"]);
         $_REQUEST["action"] = "";
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeStone") {
         UpdateBuilding("stoneFactory");
+        unset($_REQUEST["action"]);
         $_REQUEST["action"] = "";
         showContent();
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeMetal") {
         UpdateBuilding("metalFactory");
+        unset($_REQUEST["action"]);
         $_REQUEST["action"] = "";
         showContent();
     }
@@ -251,7 +255,7 @@ function renderVillage($aRow1) {
                     <div class="panel-footer">
                         <form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeHQ" />
-                            <input type="submit" class="btn btn-default " value="upgradeHQ">
+                            <input type="submit" class="btn btn-default " value="upgrade">
                         </form>
                     </div>
                 </div>
@@ -264,7 +268,7 @@ function renderVillage($aRow1) {
                     <div class="panel-footer">
                         <form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeWood" />
-                            <input type="submit" class="btn btn-default " value="upgradeWood">
+                            <input type="submit" class="btn btn-default " value="upgrade">
                         </form>
                     </div>
                 </div>
@@ -277,7 +281,7 @@ function renderVillage($aRow1) {
                     <div class="panel-footer">
                         <form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeStone" />
-                            <input type="submit" class="btn btn-default " value="upgradeStone">
+                            <input type="submit" class="btn btn-default " value="upgrade">
                         </form>
                     </div>
                 </div>
@@ -290,7 +294,7 @@ function renderVillage($aRow1) {
                     <div class="panel-footer">
                         <form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeMetal" />
-                            <input type="submit" class="btn btn-default " value="upgradeMetal">
+                            <input type="submit" class="btn btn-default " value="upgrade">
                         </form>
                     </div>
                 </div>
