@@ -9,6 +9,7 @@ function UpdateRessources(){
     global $woodFactoryProduction;
     global $stoneFactoryProduction;
     global $metalFactoryProduction;
+    global $farmProduction;
 
     $newResPerMin = 10;     //Resources gained every minute -> should later be read out of a table
 
@@ -36,11 +37,12 @@ function UpdateRessources(){
         if($differenceInMinutes >= 1){
 
             //Get the current resource values and set the new ones
-            GetResources($oMysqli, $wood, $stone, $metal);
+            GetResources($oMysqli, $wood, $stone, $metal, $people);
             SetResources($oMysqli,
                 $wood + $woodFactoryProduction[(int)$levels["woodFactory"]] * $differenceInMinutes,
                 $stone + $stoneFactoryProduction[(int)$levels["stoneFactory"]] * $differenceInMinutes,
-                $metal + $metalFactoryProduction[(int)$levels["metalFactory"]] * $differenceInMinutes);
+                $metal + $metalFactoryProduction[(int)$levels["metalFactory"]] * $differenceInMinutes,
+                $people + $farmProduction[(int)$levels["farm"]] * $differenceInMinutes);
 
             //Update the timestamp
             SetNewTimestamp($oMysqli, $currentRefresh);
@@ -72,7 +74,7 @@ function SetNewTimestamp($oMysqli, $currentTimestamp){
 }
 
 //Gets the resources of of the user
-function GetResources($oMysqli, &$wood, &$stone, &$metal){
+function GetResources($oMysqli, &$wood, &$stone, &$metal, &$people){
 
     //Get all resources of the user
     $Result = $oMysqli->query("SELECT * FROM ressources WHERE userID = {$_SESSION["userID"]}");
@@ -85,6 +87,7 @@ function GetResources($oMysqli, &$wood, &$stone, &$metal){
         $wood = $resArr['wood'];
         $stone = $resArr['stone'];
         $metal = $resArr['metal'];
+        $people = $resArr['people'];
     }
     else{
         echo("Failed to get resources out of the database");
@@ -92,14 +95,14 @@ function GetResources($oMysqli, &$wood, &$stone, &$metal){
 }
 
 //Sets the given resource values to the database given
-function SetResources($oMysqli, $wood, $stone, $metal){
+function SetResources($oMysqli, $wood, $stone, $metal, $people){
 
     //Set resources
-    $oMysqli->query("UPDATE ressources SET wood = $wood, stone = $stone, metal = $metal WHERE userID = {$_SESSION["userID"]}");
+    $oMysqli->query("UPDATE ressources SET wood = $wood, stone = $stone, metal = $metal, people = $people WHERE userID = {$_SESSION["userID"]}");
 }
 
 function GetFactoryLevels($oMysqli){
-    $sLevelQuery = "SELECT woodFactory, stoneFactory, metalFactory FROM buildings WHERE userID = {$_SESSION["userID"]}";
+    $sLevelQuery = "SELECT woodFactory, stoneFactory, metalFactory, farm FROM buildings WHERE userID = {$_SESSION["userID"]}";
     $res = $oMysqli->query($sLevelQuery);
 
     return mysqli_fetch_array($res);
@@ -114,7 +117,7 @@ function UpdateBuilding($building){
     }
 
     //Check if the given string was a valid building
-    if($building == "headquarter" || $building == "woodFactory" || $building == "stoneFactory" || $building == "metalFactory"){
+    if($building == "headquarter" || $building == "woodFactory" || $building == "stoneFactory" || $building == "metalFactory" || $building == "farm"){
 
         $query = "SELECT $building FROM buildings WHERE userID = '{$_SESSION['userID']}'";
         $Res = $oMySqli->query($query);
@@ -145,10 +148,12 @@ function CheckResources($oMysqli, $building, $level) {
     global $stoneFactoryCost;
     global $metalFactoryCost;
     global $headquarterCost;
+    global $farmCost;
 
     $woodNeeded = 0;
     $stoneNeeded = 0;
     $metalNeeded = 0;
+    $peopleNeeded = 0;
 
     //Set the costs for the building upgrade
     if($building == "woodFactory"){
@@ -166,15 +171,20 @@ function CheckResources($oMysqli, $building, $level) {
         $stoneNeeded = $metalFactoryCost[$level]["stone"];
         $metalNeeded = $metalFactoryCost[$level]["metal"];
     }
-    else if($building == "headquarter"){
+    if($building == "headquarter"){
         $woodNeeded = $headquarterCost[$level]["wood"];
         $stoneNeeded = $headquarterCost[$level]["stone"];
         $metalNeeded = $headquarterCost[$level]["metal"];
     }
+    else if($building == "farm"){
+        $woodNeeded = $farmCost[$level]["wood"];
+        $stoneNeeded = $farmCost[$level]["stone"];
+        $metalNeeded = $farmCost[$level]["metal"];
+    }
 
 
     //Get current resources
-    $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = {$_SESSION['userID']};";
+    $sSelectQuery = "SELECT wood,metal,stone,people FROM ressources WHERE userID = {$_SESSION['userID']};";
     $mResult = $oMysqli->query($sSelectQuery);
 
     $resArr = mysqli_fetch_assoc($mResult);

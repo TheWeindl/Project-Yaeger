@@ -222,7 +222,7 @@ function showContent(){
     $sSelectQuery0 = "SELECT * FROM buildings WHERE userID = {$_SESSION['userID']}";
     $mResult1 = $oMysqli->query($sSelectQuery0);
 
-    $sSelectQuery = "SELECT wood,metal,stone FROM ressources WHERE userID = {$_SESSION['userID']};";
+    $sSelectQuery = "SELECT wood,metal,stone,people FROM ressources WHERE userID = {$_SESSION['userID']};";
     $mResult = $oMysqli->query($sSelectQuery);
 
 
@@ -316,6 +316,7 @@ function renderResources($aRow) {
                 echo ("<p>Wood: ". $aRow["wood"] ."</p>");
                 echo ("<p>Stone: ". $aRow["stone"] ."</p>");
                 echo ("<p>Metal: ". $aRow["metal"] ."</p>");
+                echo ("<p>People: ". $aRow["people"] ."</p>");
                 ?>
             </div>
             <div class="panel-footer">

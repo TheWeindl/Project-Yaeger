@@ -81,4 +81,26 @@ $headquarterCost = array(
     5 => array( "wood" => 20000, "stone" => 19000, "metal" => 4000),
 );
 
+//=====================================================================================================================
+// Farm
+//=====================================================================================================================
+//Production of the factory per minute
+$farmProduction = array(
+    1 => 1,
+    2 => 3,
+    3 => 5,
+    4 => 8,
+    5 => 10
+);
+
+//Costs of the upgrades of the factory
+//First index is the level of the factory currently set
+$farmCost = array(
+    1 => array( "wood" => 1000,  "stone" => 1000,  "metal" => 0),
+    2 => array( "wood" => 3000,  "stone" => 3500,  "metal" => 0),
+    3 => array( "wood" => 6000,  "stone" => 7000,  "metal" => 0),
+    4 => array( "wood" => 13000, "stone" => 11000, "metal" => 0),
+    5 => array( "wood" => 20000, "stone" => 19000, "metal" => 0),
+);
+
 ?>
