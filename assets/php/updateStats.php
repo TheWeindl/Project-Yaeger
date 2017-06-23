@@ -96,9 +96,9 @@ function GetResources($oMysqli, &$wood, &$stone, &$metal, &$people){
 
 //Sets the given resource values to the database given
 function SetResources($oMysqli, $wood, $stone, $metal, $people){
-
     //Set resources
-    $oMysqli->query("UPDATE ressources SET wood = $wood, stone = $stone, metal = $metal, people = $people WHERE userID = {$_SESSION["userID"]}");
+    echo ("wood: " . $wood . ", stone: " . (int)$stone . ", metal: " . $metal . ", people: " . $people);
+    var_dump($oMysqli->query("UPDATE ressources SET wood = {$wood}, stone = {$stone}, metal = {$metal}, people = {$people} WHERE userID = {$_SESSION["userID"]}"));
 }
 
 function GetFactoryLevels($oMysqli){
@@ -195,7 +195,7 @@ function CheckResources($oMysqli, $building, $level) {
         $newStone = $resArr['stone']-$stoneNeeded;
         $newMetal = $resArr['metal']-$metalNeeded;
 
-        SetResources($oMysqli, $newWood, $newStone, $newMetal);
+        SetResources($oMysqli, $newWood, $newStone, $newMetal, $peopleNeeded);
         return true;
 
     } else {
