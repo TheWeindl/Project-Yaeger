@@ -105,11 +105,14 @@ else{
         unset($_REQUEST["action"]);
         $_REQUEST["action"] = "";
         showContent();
+    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeFarm") {
+        UpdateBuilding("farm");
+        unset($_REQUEST["action"]);
+        $_REQUEST["action"] = "";
+        showContent();
     }
     //case wants to see the page
     else{
-        //echo("Logged in! Welcome ".$_SESSION["username"]."<br/>");
-        //showLogoutForm();
         showContent();
     }
 }
@@ -118,16 +121,9 @@ else{
 function loginDataCorrect($sUsername, $sPassword){
     global $sCorrectUsername;
     global $sCorrectPassword;
-    /*if($sUsername == $sCorrectUsername && $sPassword == $sCorrectPassword){
-        return true;
-    }
-    else{
-        return false;
-    }*/
     if(!$oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
         echo("Could not connect to database");
     }
-
     // $sSelectQuery = "SELECT username, userpw FROM user WHERE username = '".$oMysqli->real_escape_string($sUsername)."' AND userpw = '".$sPassword."';";
     $sSelectQuery = "SELECT username, userpw FROM user WHERE username = '".$oMysqli->real_escape_string($sUsername)."';";
     $mResult = $oMysqli->query($sSelectQuery);
@@ -254,10 +250,11 @@ function renderVillage($aRow1) {
                         <p>Level: <?php echo($aRow1["headquarter"]) ?></p>
                     </div>
                     <div class="panel-footer">
-                        <form action="index.php" method="post">
+                        <button class="btn btn-default" data-toggle="modal" data-target="#hqmodal">Show HQ</button>
+                        <!--<form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeHQ" />
-                            <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>
+                            <input type="submit" class="btn btn-default" id="upgradeHQ" value="upgrade">
+                        </form>-->
                     </div>
                 </div>
 
@@ -299,7 +296,76 @@ function renderVillage($aRow1) {
                         </form>
                     </div>
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Farm</div>
+                    <div class="panel-body">
+                        <p>Level: <?php echo($aRow1["farm"]) ?></p>
+                    </div>
+                    <div class="panel-footer">
+                        <form action="index.php" method="post">
+                            <input type="hidden" name="action" value="upgradeFarm" />
+                            <input type="submit" class="btn btn-default " value="upgrade">
+                        </form>
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <div id="hqmodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-info" >Headquarter <span class="badge">Level: <?php echo($aRow1["headquarter"]) ?></span></li>
+                        <li class="list-group-item">
+                            <form action="index.php" method="post">
+                                <input type="hidden" name="action" value="upgradeHQ" />
+                                <input type="submit" class="btn btn-default " value="upgrade">
+                            </form>
+                        </li>
+                        <li class="list-group-item list-group-item-info">Wood Factory <span class="badge">Level: <?php echo($aRow1["woodFactory"]) ?></span></li>
+                        <li class="list-group-item">
+                            <form action="index.php" method="post">
+                                <input type="hidden" name="action" value="upgradeWood" />
+                                <input type="submit" class="btn btn-default " value="upgrade">
+                            </form>
+                        </li>
+                        <li class="list-group-item list-group-item-info">Stone Factory <span class="badge">Level: <?php echo($aRow1["stoneFactory"]) ?></span></li>
+                        <li class="list-group-item">
+                            <form action="index.php" method="post">
+                                <input type="hidden" name="action" value="upgradeStone" />
+                                <input type="submit" class="btn btn-default " value="upgrade">
+                            </form>
+                        </li>
+                        <li class="list-group-item list-group-item-info">Metal Factory <span class="badge">Level: <?php echo($aRow1["metalFactory"]) ?></span></li>
+                        <li class="list-group-item">
+                            <form action="index.php" method="post">
+                                <input type="hidden" name="action" value="upgradeMetal" />
+                                <input type="submit" class="btn btn-default " value="upgrade">
+                            </form>
+                        </li>
+                        <li class="list-group-item list-group-item-info">Village <span class="badge">Level: <?php echo($aRow1["farm"]) ?></span></li>
+                        <li class="list-group-item">
+                            <form action="index.php" method="post">
+                                <input type="hidden" name="action" value="upgradeFarm" />
+                                <input type="submit" class="btn btn-default " value="upgrade">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -370,36 +436,34 @@ function showLogoutForm(){
 
 function showHeaderForLoggedIn() {
     ?>
-    <header>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">project-yaeger</a>
-                </div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">project-yaeger</a>
+            </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Übersicht</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">About us</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
-    </header>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.php">Übersicht</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">About us</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
     <div id="logoutModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 

@@ -30,3 +30,7 @@ function makeProgress() {
         // console.log(val)
     }
 }
+/*
+$("#upgradeHQ").click(function () {
+    $('#hqmodal').modal('show');
+});*/
