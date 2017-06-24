@@ -218,19 +218,13 @@ function showContent(){
     $sSelectQuery0 = "SELECT * FROM buildings WHERE userID = {$_SESSION['userID']}";
     $mResult1 = $oMysqli->query($sSelectQuery0);
 
-    $sSelectQuery = "SELECT wood,metal,stone,people FROM ressources WHERE userID = {$_SESSION['userID']};";
-    $mResult = $oMysqli->query($sSelectQuery);
-
-
-
-    $aRow = mysqli_fetch_assoc($mResult);
     $aRow1 = mysqli_fetch_assoc($mResult1);
     ?>
     <div class="main">
         <?php
         UpdateRessources();
         renderVillage($aRow1);
-        renderResources($aRow);
+        renderResources(GetResources($oMysqli,$wood,$stone,$metal,$people));
         ?>
     </div>
     <?php

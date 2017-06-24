@@ -88,6 +88,9 @@ function GetResources($oMysqli, &$wood, &$stone, &$metal, &$people){
         $stone = $resArr['stone'];
         $metal = $resArr['metal'];
         $people = $resArr['people'];
+
+        //Return the array if all the data is needed at once (fixes the progress bar bug)
+        return $resArr;
     }
     else{
         echo("Failed to get resources out of the database");
@@ -97,8 +100,9 @@ function GetResources($oMysqli, &$wood, &$stone, &$metal, &$people){
 //Sets the given resource values to the database given
 function SetResources($oMysqli, $wood, $stone, $metal, $people){
     //Set resources
-    echo ("wood: " . $wood . ", stone: " . (int)$stone . ", metal: " . $metal . ", people: " . $people);
-    var_dump($oMysqli->query("UPDATE ressources SET wood = {$wood}, stone = {$stone}, metal = {$metal}, people = {$people} WHERE userID = {$_SESSION["userID"]}"));
+    //echo ("wood: " . $wood . ", stone: " . (int)$stone . ", metal: " . $metal . ", people: " . $people);
+    //var_dump($oMysqli->query("UPDATE ressources SET wood = {$wood}, stone = {$stone}, metal = {$metal}, people = {$people} WHERE userID = {$_SESSION["userID"]}"));
+    $oMysqli->query("UPDATE ressources SET wood = {$wood}, stone = {$stone}, metal = {$metal}, people = {$people} WHERE userID = {$_SESSION["userID"]}");
 }
 
 function GetFactoryLevels($oMysqli){
@@ -141,7 +145,7 @@ function UpdateBuilding($building){
     }
 }
 
-//Checks if the resources are available to upgradet the building to the given level
+//Checks if the resources are available to upgraded the building to the given level
 function CheckResources($oMysqli, $building, $level) {
 
     global $woodFactoryCost;
@@ -150,9 +154,7 @@ function CheckResources($oMysqli, $building, $level) {
     global $headquarterCost;
     global $farmCost;
 
-    $woodNeeded = 0;
-    $stoneNeeded = 0;
-    $metalNeeded = 0;
+    //Needed until people are fully implemented
     $peopleNeeded = 0;
 
     //Set the costs for the building upgrade
