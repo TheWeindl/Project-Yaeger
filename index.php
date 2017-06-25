@@ -256,6 +256,7 @@ function renderVillage($aRow1) {
                     <div class="panel-heading">Wood Factory</div>
                     <div class="panel-body">
                         <p>Level: <?php echo($aRow1["woodFactory"]) ?></p>
+                        <p><?php echo(GetProduction("woodFactory"))?> per hour</p>
                     </div>
                     <div class="panel-footer">
                         <form action="index.php" method="post">
@@ -269,6 +270,7 @@ function renderVillage($aRow1) {
                     <div class="panel-heading">Stone Factory</div>
                     <div class="panel-body">
                         <p>Level: <?php echo($aRow1["stoneFactory"]) ?></p>
+                        <p><?php echo(GetProduction("stoneFactory"))?> per hour</p>
                     </div>
                     <div class="panel-footer">
                         <form action="index.php" method="post">
@@ -282,6 +284,7 @@ function renderVillage($aRow1) {
                     <div class="panel-heading">Metal Factory</div>
                     <div class="panel-body">
                         <p>Level: <?php echo($aRow1["metalFactory"]) ?></p>
+                        <p><?php echo(GetProduction("metalFactory"))?> per hour</p>
                     </div>
                     <div class="panel-footer">
                         <form action="index.php" method="post">
@@ -295,6 +298,7 @@ function renderVillage($aRow1) {
                     <div class="panel-heading">Farm</div>
                     <div class="panel-body">
                         <p>Level: <?php echo($aRow1["farm"]) ?></p>
+                        <p><?php echo(GetProduction("farm"))?> per hour</p>
                     </div>
                     <div class="panel-footer">
                         <form action="index.php" method="post">

@@ -206,4 +206,40 @@ function CheckResources($oMysqli, $building, $level) {
         return false;
     }
 }
+
+//Returns the production of the given building as a string if it is a valid building
+function GetProduction($building){
+
+    global $woodFactoryProduction;
+    global $stoneFactoryProduction;
+    global $metalFactoryProduction;
+    global $farmProduction;
+
+    //Connect to the database
+    if(! $oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
+        die("Database connection could not be established!");
+    }
+
+    //Get the levels of all the factories
+    $level = GetFactoryLevels($oMysqli);
+
+    //Return the production value of the given building at the current level
+    if($building == "woodFactory"){
+        $production = $woodFactoryProduction["{$level[$building]}"];
+    }
+    else if($building == "stoneFactory"){
+        $production = $stoneFactoryProduction["{$level[$building]}"];
+    }
+    else if($building == "metalFactory"){
+        $production = $metalFactoryProduction["{$level[$building]}"];
+    }
+    else if($building == "farm"){
+        $production = $farmProduction["{$level[$building]}"];
+    }
+    else{
+        $production = 0;
+    }
+
+    return $production;
+}
 ?>
