@@ -105,11 +105,20 @@ function SetResources($oMysqli, $wood, $stone, $metal, $people){
     $oMysqli->query("UPDATE ressources SET wood = {$wood}, stone = {$stone}, metal = {$metal}, people = {$people} WHERE userID = {$_SESSION["userID"]}");
 }
 
+//Returns an array with all the factory(producing buildings) levels
 function GetFactoryLevels($oMysqli){
     $sLevelQuery = "SELECT woodFactory, stoneFactory, metalFactory, farm FROM buildings WHERE userID = {$_SESSION["userID"]}";
     $res = $oMysqli->query($sLevelQuery);
 
     return mysqli_fetch_array($res);
+}
+
+//Returns an array with all the building levels
+function GetBuildingLevels($oMysqli){
+    $sLevelQuery = "SELECT headquarter, woodFactory, stoneFactory, metalFactory, farm FROM buildings WHERE userID = {$_SESSION["userID"]}";
+    $lvl = $oMysqli->query($sLevelQuery);
+
+    return mysqli_fetch_array($lvl);
 }
 
 //Upgrade the building with the given name in the database
@@ -240,6 +249,42 @@ function GetProduction($building){
         $production = 0;
     }
 
-    return $production;
+    return $production * 60;
+}
+
+//Returns an array of the resource cost needed to upgrade the given building
+function GetUpgradeCosts($building){
+
+    global $headquarterCost;
+    global $woodFactoryCost;
+    global $stoneFactoryCost;
+    global $metalFactoryCost;
+    global $farmCost;
+
+    //Connect to the database
+    if(! $oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
+        die("Database connection could not be established!");
+    }
+
+    //Get the levels of all the factories
+    $level = GetBuildingLevels($oMysqli);
+
+    if($building == "headquarter"){
+        $costs = $headquarterCost[$level[$building]];
+    }
+    else if($building == "woodFactory"){
+        $costs = $woodFactoryCost[$level[$building]];
+    }
+    else if($building == "stoneFactory"){
+        $costs = $stoneFactoryCost[$level[$building]];
+    }
+    else if($building == "metalFactory"){
+        $costs = $metalFactoryCost[$level[$building]];
+    }
+    else if($building == "farm"){
+        $costs = $farmCost[$level[$building]];
+    }
+
+    return $costs;
 }
 ?>
