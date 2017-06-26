@@ -13,7 +13,7 @@ function makeProgress() {
         $pbRes.addClass("progress-bar-success");
         $pbRes.attr('aria-valuenow', 0);
         $pbRes.css("width", 0+"%");
-        val = 0;
+        val = 1;
     } else {
         $pbRes.removeClass("progress-bar-success");
         $pbRes.attr('aria-valuenow', val);

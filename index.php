@@ -110,6 +110,11 @@ else{
         unset($_REQUEST["action"]);
         $_REQUEST["action"] = "";
         showContent();
+    } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeStorage") {
+        UpdateBuilding("storage");
+        unset($_REQUEST["action"]);
+        $_REQUEST["action"] = "";
+        showContent();
     }
     //case wants to see the page
     else{
@@ -340,6 +345,26 @@ function renderVillage($aRow1) {
                         </div>
                     </div>
                 </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Storage</div>
+                    <div class="panel-body">
+                        <p>Level: <?php echo($aRow1["storage"]) ?></p>
+                        <p><?php echo(GetStorageCapacity())?> Kap.</p>
+                    </div>
+                    <div class="panel-footer">
+                        <!--<form action="index.php" method="post">
+                            <input type="hidden" name="action" value="upgradeFarm" />
+                            <input type="submit" class="btn btn-default " value="upgrade">
+                        </form>-->
+                        <div class="progress">
+                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span>Disabled</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -391,7 +416,7 @@ function renderVillage($aRow1) {
                         <li class="list-group-item">
                             <form action="index.php" method="post">
                                 <input type="hidden" name="action" value="upgradeStone" />
-                                <input type="submit" class="btn btn-default " value="upgrade" disabled>
+                                <input type="submit" class="btn btn-default " value="upgrade">
                             </form>
                         </li>
                         <li class="list-group-item list-group-item-info">Metal Factory <span class="badge">Level: <?php echo($aRow1["metalFactory"]) ?></span></li>
@@ -407,7 +432,7 @@ function renderVillage($aRow1) {
                                 <input type="submit" class="btn btn-default " value="upgrade">
                             </form>
                         </li>
-                        <li class="list-group-item list-group-item-info">Village <span class="badge">Level: <?php echo($aRow1["farm"]) ?></span></li>
+                        <li class="list-group-item list-group-item-info">Farm <span class="badge">Level: <?php echo($aRow1["farm"]) ?></span></li>
                         <li class="list-group-item res-needed list-group-item-danger">
                             Needed:
                             <span class="badge metal">Metal: <?php echo(GetUpgradeCosts("farm")["metal"]);?></span>
@@ -417,6 +442,20 @@ function renderVillage($aRow1) {
                         <li class="list-group-item">
                             <form action="index.php" method="post">
                                 <input type="hidden" name="action" value="upgradeFarm" />
+                                <input type="submit" class="btn btn-default " value="upgrade">
+                            </form>
+                        </li>
+
+                        <li class="list-group-item list-group-item-info">Storage <span class="badge">Level: <?php echo($aRow1["storage"]) ?></span></li>
+                        <li class="list-group-item res-needed list-group-item-danger">
+                            Needed:
+                            <span class="badge metal">Metal: <?php echo(GetUpgradeCosts("storage")["metal"]);?></span>
+                            <span class="badge stone">Stone: <?php echo(GetUpgradeCosts("storage")["stone"]);?></span>
+                            <span class="badge wood">Wood: <?php echo(GetUpgradeCosts("storage")["wood"]);?></span>
+                        </li>
+                        <li class="list-group-item">
+                            <form action="index.php" method="post">
+                                <input type="hidden" name="action" value="upgradeStorage" />
                                 <input type="submit" class="btn btn-default " value="upgrade">
                             </form>
                         </li>
