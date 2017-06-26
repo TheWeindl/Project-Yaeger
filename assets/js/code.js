@@ -34,6 +34,17 @@ if(sessionStorage.getItem("showHQ") == "true") {
     $('#hqmodal').modal('show');
     sessionStorage.setItem("showHQ", "false");
 }
+
+// console.log($(".resource-production .progress-bar"));
+for(let j = 0; j < $(".resource-production .progress-bar").length; j++) {
+    // console.info($($(".resource-production .progress-bar")[j]).width());
+    if(($($(".resource-production .progress-bar")[j]).width() / $($(".resource-production .progress-bar")[j]).parent().width() * 100) >= 70) {
+        // console.log("more");
+        $($(".resource-production .progress-bar")[j]).removeClass("progress-bar-success");
+        $($(".resource-production .progress-bar")[j]).addClass("progress-bar-warning");
+    }
+}
+
 let r = /\d+/;
 
 let $ResNeededArr = $(".res-needed span");
@@ -47,7 +58,7 @@ let $stoneAvailable = $(".resource-production .stone").text().match(r)[0];
 let $metalAvailable = $(".resource-production .metal").text().match(r)[0];
 let $ResProduction = $(".resource-production .panel-body p");
 
-// console.log($stoneAvailable);
+// console.log("stone " + $stoneAvailable);
 
 for(let i = 0; i < $ResNeededArr.length; i++) {
     // console.info($($ResNeededArr[i]).text().match(r)[0]);
@@ -59,4 +70,6 @@ for(let i = 0; i < $ResNeededArr.length; i++) {
         // console.info("enough everything");
     }
 }
-console.info(sessionStorage.getItem("wood"));
+// console.info(sessionStorage.getItem("wood"));
+
+

@@ -480,8 +480,29 @@ function renderResources($aRow) {
             <div class="panel-body">
                 <?php
                 echo ("<p class='wood'>Wood: ". $aRow["wood"] ."</p>");
+                ?>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["wood"] / $_SESSION["storageCapacity"] * 100)?>%">
+                    </div>
+                </div>
+                <br/>
+                <?php
                 echo ("<p class='stone'>Stone: ". $aRow["stone"] ."</p>");
+                ?>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["stone"] / $_SESSION["storageCapacity"] * 100)?>%">
+                    </div>
+                </div>
+                <br/>
+                <?php
                 echo ("<p class='metal'>Metal: ". $aRow["metal"] ."</p>");
+                ?>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["metal"] / $_SESSION["storageCapacity"] * 100)?>%">
+                    </div>
+                </div>
+                <br/>
+                <?php
                 echo ("<p class='people'>People: ". $aRow["people"] ."</p>");
                 ?>
             </div>
