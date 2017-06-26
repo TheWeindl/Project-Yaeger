@@ -34,21 +34,38 @@ function UpdateRessources(){
         $differenceInMinutes = ($timeFirst - $timeSecond ) / 60;
 
         //If time delta is bigger than 1 minute and storage is available the update resources
-        if($differenceInMinutes >= 1 && StorageAvailable($oMysqli)){
+        if($differenceInMinutes >= 1 ){
 
-            //Get the current resource values and set the new ones
             GetResources($oMysqli, $wood, $stone, $metal, $people);
-            SetResources($oMysqli,
-                $wood + $woodFactoryProduction[(int)$levels["woodFactory"]] * $differenceInMinutes,
-                $stone + $stoneFactoryProduction[(int)$levels["stoneFactory"]] * $differenceInMinutes,
-                $metal + $metalFactoryProduction[(int)$levels["metalFactory"]] * $differenceInMinutes,
-                $people + $farmProduction[(int)$levels["farm"]] * $differenceInMinutes);
 
-            //Set resources to the current session
-            SetResourcesToSession($wood + $woodFactoryProduction[(int)$levels["woodFactory"]] * $differenceInMinutes,
-                $stone + $stoneFactoryProduction[(int)$levels["stoneFactory"]] * $differenceInMinutes,
-                $metal + $metalFactoryProduction[(int)$levels["metalFactory"]] * $differenceInMinutes,
-                $people + $farmProduction[(int)$levels["farm"]] * $differenceInMinutes);
+            if(StorageAvailable($oMysqli,"wood")) {
+                $wood = $wood + $woodFactoryProduction[(int)$levels["woodFactory"]] * $differenceInMinutes;
+            }
+
+            if(StorageAvailable($oMysqli,"stone")) {
+                $stone = $stone + $stoneFactoryProduction[(int)$levels["stoneFactory"]] * $differenceInMinutes;
+            }
+
+            if(StorageAvailable($oMysqli,"metal")) {
+                $metal = $metal + $metalFactoryProduction[(int)$levels["metalFactory"]] * $differenceInMinutes;
+            }
+
+            $people = $people + $farmProduction[(int)$levels["farm"]] * $differenceInMinutes;
+
+            if(!StorageAvailable($oMysqli,"wood")) {
+                $wood = $_SESSION["storageCapacity"];
+            }
+
+            if(!StorageAvailable($oMysqli,"metal")) {
+                $metal = $_SESSION["storageCapacity"];
+            }
+
+            if(!StorageAvailable($oMysqli,"stone")) {
+                $stone = $_SESSION["storageCapacity"];
+            }
+
+            SetResources($oMysqli, $wood, $stone, $metal, $people);
+            SetResourcesToSession($wood, $stone, $metal, $people);
 
             //Update the timestamp
             SetNewTimestamp($oMysqli, $currentRefresh);
@@ -59,7 +76,7 @@ function UpdateRessources(){
         //Return the passed amount of time in minutes
         return '
         <div class="progress">
-            <div class="progress-bar progress-bar-striped active" id="progressBarMetal" role="progressbar" aria-valuenow="'. $differenceInMinutes*100 .'"
+            <div class="progress-bar active" id="progressBarRes" role="progressbar" aria-valuenow="'. $differenceInMinutes*100 .'"
                  aria-valuemin="0" aria-valuemax="100" style="width:'.$differenceInMinutes*100 . '%">
                 <span></span>
             </div>
@@ -331,18 +348,22 @@ function GetStorageCapacity(){
 }
 
 //Checks if there is storage available to store resources
-function StorageAvailable($oMysqli){
+function StorageAvailable($oMysqli, $resource){
 
-    GetResources($oMysqli, $wood, $metal, $stone, $people);
+    GetResources($oMysqli, $wood, $stone, $metal, $people);
     $storage = GetStorageCapacity();
 
-    if($wood >= $storage || $stone >= $storage || $metal >= $storage){
-        //Storage is full
-        return false;
+    if($resource == "wood"){
+        return $wood <= $storage;
+    }
+    elseif ($resource == "stone"){
+        return $stone <= $storage;
+    }
+    elseif ($resource == "metal"){
+        return $metal <= $storage;
     }
     else{
-        //Storage available
-        return true;
+        return false;
     }
 }
 ?>
