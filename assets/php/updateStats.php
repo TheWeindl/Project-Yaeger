@@ -354,13 +354,13 @@ function StorageAvailable($oMysqli, $resource){
     $storage = GetStorageCapacity();
 
     if($resource == "wood"){
-        return $wood <= $storage;
+        return $wood < $storage;
     }
     elseif ($resource == "stone"){
-        return $stone <= $storage;
+        return $stone < $storage;
     }
     elseif ($resource == "metal"){
-        return $metal <= $storage;
+        return $metal < $storage;
     }
     else{
         return false;
