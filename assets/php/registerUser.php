@@ -51,8 +51,8 @@ function SetStartResources($oMysqli){
 //Prepares the needed fields in the buildings table
 function SetBuildings($oMysqli){
 
-    $sSetBuildings = "INSERT INTO buildings (userID, headquarter, woodFactory, stoneFactory, metalFactory, farm) 
-                      VALUES ({$_SESSION['userID']},1,1,1,1,1)";
+    $sSetBuildings = "INSERT INTO buildings (userID, headquarter, woodFactory, stoneFactory, metalFactory, farm, storage) 
+                      VALUES ({$_SESSION['userID']},1,1,1,1,1,1)";
     $oMysqli->query($sSetBuildings);
 }
 

@@ -33,13 +33,19 @@ function UpdateRessources(){
         $timeSecond = strtotime($lastRefresh["lastrefresh"]);
         $differenceInMinutes = ($timeFirst - $timeSecond ) / 60;
 
-        //If time delta is bigger than 1 minute the update resources
-        if($differenceInMinutes >= 1){
+        //If time delta is bigger than 1 minute and storage is available the update resources
+        if($differenceInMinutes >= 1 && StorageAvailable($oMysqli)){
 
             //Get the current resource values and set the new ones
             GetResources($oMysqli, $wood, $stone, $metal, $people);
             SetResources($oMysqli,
                 $wood + $woodFactoryProduction[(int)$levels["woodFactory"]] * $differenceInMinutes,
+                $stone + $stoneFactoryProduction[(int)$levels["stoneFactory"]] * $differenceInMinutes,
+                $metal + $metalFactoryProduction[(int)$levels["metalFactory"]] * $differenceInMinutes,
+                $people + $farmProduction[(int)$levels["farm"]] * $differenceInMinutes);
+
+            //Set resources to the current session
+            SetResourcesToSession($wood + $woodFactoryProduction[(int)$levels["woodFactory"]] * $differenceInMinutes,
                 $stone + $stoneFactoryProduction[(int)$levels["stoneFactory"]] * $differenceInMinutes,
                 $metal + $metalFactoryProduction[(int)$levels["metalFactory"]] * $differenceInMinutes,
                 $people + $farmProduction[(int)$levels["farm"]] * $differenceInMinutes);
@@ -115,7 +121,7 @@ function GetFactoryLevels($oMysqli){
 
 //Returns an array with all the building levels
 function GetBuildingLevels($oMysqli){
-    $sLevelQuery = "SELECT headquarter, woodFactory, stoneFactory, metalFactory, farm FROM buildings WHERE userID = {$_SESSION["userID"]}";
+    $sLevelQuery = "SELECT * FROM buildings WHERE userID = {$_SESSION["userID"]}";
     $lvl = $oMysqli->query($sLevelQuery);
 
     return mysqli_fetch_array($lvl);
@@ -130,7 +136,7 @@ function UpdateBuilding($building){
     }
 
     //Check if the given string was a valid building
-    if($building == "headquarter" || $building == "woodFactory" || $building == "stoneFactory" || $building == "metalFactory" || $building == "farm"){
+    if($building == "headquarter" || $building == "woodFactory" || $building == "stoneFactory" || $building == "metalFactory" || $building == "farm" || $building == "storage"){
 
         $query = "SELECT $building FROM buildings WHERE userID = '{$_SESSION['userID']}'";
         $Res = $oMySqli->query($query);
@@ -162,6 +168,7 @@ function CheckResources($oMysqli, $building, $level) {
     global $metalFactoryCost;
     global $headquarterCost;
     global $farmCost;
+    global $storageCost;
 
     //Needed until people are fully implemented
     $peopleNeeded = 0;
@@ -182,7 +189,7 @@ function CheckResources($oMysqli, $building, $level) {
         $stoneNeeded = $metalFactoryCost[$level]["stone"];
         $metalNeeded = $metalFactoryCost[$level]["metal"];
     }
-    if($building == "headquarter"){
+    else if($building == "headquarter"){
         $woodNeeded = $headquarterCost[$level]["wood"];
         $stoneNeeded = $headquarterCost[$level]["stone"];
         $metalNeeded = $headquarterCost[$level]["metal"];
@@ -191,6 +198,11 @@ function CheckResources($oMysqli, $building, $level) {
         $woodNeeded = $farmCost[$level]["wood"];
         $stoneNeeded = $farmCost[$level]["stone"];
         $metalNeeded = $farmCost[$level]["metal"];
+    }
+    else if($building == "storage"){
+        $woodNeeded = $storageCost[$level]["wood"];
+        $stoneNeeded = $storageCost[$level]["stone"];
+        $metalNeeded = $storageCost[$level]["metal"];
     }
 
 
@@ -260,6 +272,7 @@ function GetUpgradeCosts($building){
     global $stoneFactoryCost;
     global $metalFactoryCost;
     global $farmCost;
+    global $storageCost;
 
     //Connect to the database
     if(! $oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
@@ -284,7 +297,52 @@ function GetUpgradeCosts($building){
     else if($building == "farm"){
         $costs = $farmCost[$level[$building]];
     }
+    else if($building == "storage"){
+        $costs = $storageCost[$level[$building]];
+    }
 
     return $costs;
+}
+
+//Sets the given resource values to the session resources
+function SetResourcesToSession($wood, $stone, $metal, $people){
+    $_SESSION["wood"] = $wood;
+    $_SESSION["stone"] = $stone;
+    $_SESSION["metal"] = $metal;
+    $_SESSION["people"] = $people;
+}
+
+//Returns the current storage capacity and sets it to the session
+function GetStorageCapacity(){
+
+    global $storageCapacity;
+
+    // open connection to db server and selcting the db
+    if(! $oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
+        die("Database connection could not be established!");
+    }
+
+    $levels = GetBuildingLevels($oMysqli);
+
+    $storageCap = $storageCapacity[$levels['storage']];
+    $_SESSION["storageCapacity"] = $storageCap;
+
+    return $storageCap;
+}
+
+//Checks if there is storage available to store resources
+function StorageAvailable($oMysqli){
+
+    GetResources($oMysqli, $wood, $metal, $stone, $people);
+    $storage = GetStorageCapacity();
+
+    if($wood >= $storage || $stone >= $storage || $metal >= $storage){
+        //Storage is full
+        return false;
+    }
+    else{
+        //Storage available
+        return true;
+    }
 }
 ?>
