@@ -2,7 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    border-radius: 0 !important;
+    /* border-radius: 0 !important;*/
 }
 
 body {
@@ -46,11 +46,16 @@ main {
 }
 
 .progress-bar {
-    transition: width 1s ease;
+    /*transition: width 1s ease;*/
 }
 
 .progress {
     margin: 0;
+}
+.hq-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 footer {

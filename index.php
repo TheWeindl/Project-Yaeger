@@ -239,16 +239,25 @@ function renderVillage($aRow1) {
             <div class="panel-heading">Your Town</div>
             <div class="panel-body">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Headquarter</div>
+                    <div class="panel-heading hq-panel">
+                        <p>Headquarter</p>
+                        <button class="btn btn-default" id="showHQ" >Show HQ</button>
+                    </div>
                     <div class="panel-body">
                         <p>Level: <?php echo($aRow1["headquarter"]) ?></p>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn btn-default" data-toggle="modal" data-target="#hqmodal">Show HQ</button>
+
                         <!--<form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeHQ" />
                             <input type="submit" class="btn btn-default" id="upgradeHQ" value="upgrade">
                         </form>-->
+                        <div class="progress">
+                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span>Disabled</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -259,10 +268,16 @@ function renderVillage($aRow1) {
                         <p><?php echo(GetProduction("woodFactory"))?> per hour</p>
                     </div>
                     <div class="panel-footer">
-                        <form action="index.php" method="post">
+                        <!--<form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeWood" />
                             <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>
+                        </form>-->
+                        <div class="progress">
+                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span>Disabled</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -273,10 +288,16 @@ function renderVillage($aRow1) {
                         <p><?php echo(GetProduction("stoneFactory"))?> per hour</p>
                     </div>
                     <div class="panel-footer">
-                        <form action="index.php" method="post">
+                        <!--<form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeStone" />
                             <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>
+                        </form>-->
+                        <div class="progress">
+                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span>Disabled</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -287,10 +308,16 @@ function renderVillage($aRow1) {
                         <p><?php echo(GetProduction("metalFactory"))?> per hour</p>
                     </div>
                     <div class="panel-footer">
-                        <form action="index.php" method="post">
+                        <!--<form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeMetal" />
                             <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>
+                        </form>-->
+                        <div class="progress">
+                            <div class="progress-bar inactive" id="progressBarMetal" role="progressbar" aria-valuenow="0"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span>Disabled</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -301,10 +328,16 @@ function renderVillage($aRow1) {
                         <p><?php echo(GetProduction("farm"))?> per hour</p>
                     </div>
                     <div class="panel-footer">
-                        <form action="index.php" method="post">
+                        <!--<form action="index.php" method="post">
                             <input type="hidden" name="action" value="upgradeFarm" />
                             <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>
+                        </form>-->
+                        <div class="progress">
+                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span>Disabled</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -323,6 +356,12 @@ function renderVillage($aRow1) {
                 <div class="modal-body">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-info" >Headquarter <span class="badge">Level: <?php echo($aRow1["headquarter"]) ?></span></li>
+                        <li class="list-group-item res-needed list-group-item-danger">
+                            Needed:
+                            <span class="badge metal">Metal: <?php echo(GetUpgradeCosts("farm")["metal"]);?></span>
+                            <span class="badge stone">Stone: <?php echo(GetUpgradeCosts("farm")["stone"]);?></span>
+                            <span class="badge wood">Wood: <?php echo(GetUpgradeCosts("farm")["wood"]);?></span>
+                        </li>
                         <li class="list-group-item">
                             <form action="index.php" method="post">
                                 <input type="hidden" name="action" value="upgradeHQ" />
@@ -330,6 +369,12 @@ function renderVillage($aRow1) {
                             </form>
                         </li>
                         <li class="list-group-item list-group-item-info">Wood Factory <span class="badge">Level: <?php echo($aRow1["woodFactory"]) ?></span></li>
+                        <li class="list-group-item res-needed list-group-item-danger">
+                            Needed:
+                            <span class="badge metal">Metal: <?php echo(GetUpgradeCosts("woodFactory")["metal"]);?></span>
+                            <span class="badge stone">Stone: <?php echo(GetUpgradeCosts("woodFactory")["stone"]);?></span>
+                            <span class="badge wood">Wood: <?php echo(GetUpgradeCosts("woodFactory")["wood"]);?></span>
+                        </li>
                         <li class="list-group-item">
                             <form action="index.php" method="post">
                                 <input type="hidden" name="action" value="upgradeWood" />
@@ -337,13 +382,25 @@ function renderVillage($aRow1) {
                             </form>
                         </li>
                         <li class="list-group-item list-group-item-info">Stone Factory <span class="badge">Level: <?php echo($aRow1["stoneFactory"]) ?></span></li>
+                        <li class="list-group-item res-needed list-group-item-danger">
+                            Needed:
+                            <span class="badge metal">Metal: <?php echo(GetUpgradeCosts("stoneFactory")["metal"]);?></span>
+                            <span class="badge stone">Stone: <?php echo(GetUpgradeCosts("stoneFactory")["stone"]);?></span>
+                            <span class="badge wood">Wood: <?php echo(GetUpgradeCosts("stoneFactory")["wood"]);?></span>
+                        </li>
                         <li class="list-group-item">
                             <form action="index.php" method="post">
                                 <input type="hidden" name="action" value="upgradeStone" />
-                                <input type="submit" class="btn btn-default " value="upgrade">
+                                <input type="submit" class="btn btn-default " value="upgrade" disabled>
                             </form>
                         </li>
                         <li class="list-group-item list-group-item-info">Metal Factory <span class="badge">Level: <?php echo($aRow1["metalFactory"]) ?></span></li>
+                        <li class="list-group-item res-needed list-group-item-danger">
+                            Needed:
+                            <span class="badge metal">Metal: <?php echo(GetUpgradeCosts("metalFactory")["metal"]);?></span>
+                            <span class="badge stone">Stone: <?php echo(GetUpgradeCosts("metalFactory")["stone"]);?></span>
+                            <span class="badge wood">Wood: <?php echo(GetUpgradeCosts("metalFactory")["wood"]);?></span>
+                        </li>
                         <li class="list-group-item">
                             <form action="index.php" method="post">
                                 <input type="hidden" name="action" value="upgradeMetal" />
@@ -351,6 +408,12 @@ function renderVillage($aRow1) {
                             </form>
                         </li>
                         <li class="list-group-item list-group-item-info">Village <span class="badge">Level: <?php echo($aRow1["farm"]) ?></span></li>
+                        <li class="list-group-item res-needed list-group-item-danger">
+                            Needed:
+                            <span class="badge metal">Metal: <?php echo(GetUpgradeCosts("farm")["metal"]);?></span>
+                            <span class="badge stone">Stone: <?php echo(GetUpgradeCosts("farm")["stone"]);?></span>
+                            <span class="badge wood">Wood: <?php echo(GetUpgradeCosts("farm")["wood"]);?></span>
+                        </li>
                         <li class="list-group-item">
                             <form action="index.php" method="post">
                                 <input type="hidden" name="action" value="upgradeFarm" />
@@ -377,10 +440,10 @@ function renderResources($aRow) {
             <div class="panel-heading">Resource Production</div>
             <div class="panel-body">
                 <?php
-                echo ("<p>Wood: ". $aRow["wood"] ."</p>");
-                echo ("<p>Stone: ". $aRow["stone"] ."</p>");
-                echo ("<p>Metal: ". $aRow["metal"] ."</p>");
-                echo ("<p>People: ". $aRow["people"] ."</p>");
+                echo ("<p class='wood'>Wood: ". $aRow["wood"] ."</p>");
+                echo ("<p class='stone'>Stone: ". $aRow["stone"] ."</p>");
+                echo ("<p class='metal'>Metal: ". $aRow["metal"] ."</p>");
+                echo ("<p class='people'>People: ". $aRow["people"] ."</p>");
                 ?>
             </div>
             <div class="panel-footer">
