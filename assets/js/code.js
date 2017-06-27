@@ -25,6 +25,11 @@ function makeProgress() {
     }
 }
 
+$(".glyphicon-home").click(function () {
+    sessionStorage.setItem("showHQ", "true");
+    location.reload();
+});
+
 $("#showHQ").click(function () {
     sessionStorage.setItem("showHQ", "true");
     location.reload();
@@ -38,10 +43,13 @@ if(sessionStorage.getItem("showHQ") == "true") {
 // console.log($(".resource-production .progress-bar"));
 for(let j = 0; j < $(".resource-production .progress-bar").length; j++) {
     // console.info($($(".resource-production .progress-bar")[j]).width());
-    if(($($(".resource-production .progress-bar")[j]).width() / $($(".resource-production .progress-bar")[j]).parent().width() * 100) >= 70) {
+    if(($($(".resource-production .progress-bar")[j]).width() / $($(".resource-production .progress-bar")[j]).parent().width() * 100) >= 70 && ($($(".resource-production .progress-bar")[j]).width() / $($(".resource-production .progress-bar")[j]).parent().width() * 100) < 100) {
         // console.log("more");
         $($(".resource-production .progress-bar")[j]).removeClass("progress-bar-success");
         $($(".resource-production .progress-bar")[j]).addClass("progress-bar-warning");
+    } else if(($($(".resource-production .progress-bar")[j]).width() / $($(".resource-production .progress-bar")[j]).parent().width() * 100) == 100) {
+        $($(".resource-production .progress-bar")[j]).removeClass("progress-bar-warning");
+        $($(".resource-production .progress-bar")[j]).addClass("progress-bar-danger");
     }
 }
 
@@ -52,10 +60,10 @@ let $woodNeeded = $("span.wood");
 let $stoneNeeded = $("span.stone");
 let $metalNeeded = $("span.metal");
 
-let $woodAvailable = $(".resource-production .wood").text().match(r)[0];
-let $stoneAvailable = $(".resource-production .stone").text().match(r)[0];
+let $woodAvailable = $(".resource-production .panel-body .wood").text().match(r)[0];
+let $stoneAvailable = $(".resource-production .panel-body .stone").text().match(r)[0];
 
-let $metalAvailable = $(".resource-production .metal").text().match(r)[0];
+let $metalAvailable = $(".resource-production .panel-body .metal").text().match(r)[0];
 let $ResProduction = $(".resource-production .panel-body p");
 
 // console.log("stone " + $stoneAvailable);

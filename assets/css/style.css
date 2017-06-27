@@ -41,17 +41,22 @@ main {
     align-self: center;
 }
 
-.resource-production {
-
+.resource-production .panel-body .progress {
+    height: 8px;
 }
 
-.progress-bar {
-    /*transition: width 1s ease;*/
+.resource-production .panel-body .progress-bar {
+    border-radius: 8px;
 }
 
 .progress {
     margin: 0;
 }
+
+.glyphicon-home {
+    cursor: pointer;
+}
+
 .hq-panel {
     display: flex;
     justify-content: space-between;

@@ -13,6 +13,7 @@ require_once("assets/php/registerUser.php");
     <title>project-yaeger</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--<link href="assets/css/flat-ui.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -243,124 +244,145 @@ function renderVillage($aRow1) {
         <div class="panel panel-default">
             <div class="panel-heading">Your Town</div>
             <div class="panel-body">
-                <div class="panel panel-default">
-                    <div class="panel-heading hq-panel">
-                        <p>Headquarter</p>
-                        <button class="btn btn-default" id="showHQ" >Show HQ</button>
-                    </div>
-                    <div class="panel-body">
-                        <p>Level: <?php echo($aRow1["headquarter"]) ?></p>
-                    </div>
-                    <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading hq-panel">
+                                Headquarter<span class="glyphicon glyphicon-home"></span>
+                            </div>
+                            <div class="panel-body">
+                                <p>Level: <?php echo($aRow1["headquarter"]) ?></p>
+                                <!--<button class="btn btn-default" id="showHQ" >Show HQ</button>-->
+                            </div>
+                            <div class="panel-footer">
 
-                        <!--<form action="index.php" method="post">
-                            <input type="hidden" name="action" value="upgradeHQ" />
-                            <input type="submit" class="btn btn-default" id="upgradeHQ" value="upgrade">
-                        </form>-->
-                        <div class="progress">
-                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                <span>Disabled</span>
+                                <!--<form action="index.php" method="post">
+                                    <input type="hidden" name="action" value="upgradeHQ" />
+                                    <input type="submit" class="btn btn-default" id="upgradeHQ" value="upgrade">
+                                </form>-->
+                                <div class="progress">
+                                    <div class="progress-bar inactive" id="progressBarHQ" role="progressbar" aria-valuenow="0"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <span>Disabled</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+
+
+                            <div class="panel-heading">Wood Factory</div>
+                            <div class="panel-body">
+                                <p>Level: <?php echo($aRow1["woodFactory"]) ?></p>
+                                <p><?php echo(GetProduction("woodFactory"))?> per hour</p>
+                            </div>
+                            <div class="panel-footer">
+                                <!--<form action="index.php" method="post">
+                                    <input type="hidden" name="action" value="upgradeWood" />
+                                    <input type="submit" class="btn btn-default " value="upgrade">
+                                </form>-->
+                                <div class="progress">
+                                    <div class="progress-bar inactive" id="progressBarWood" role="progressbar" aria-valuenow="0"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <span>Disabled</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Wood Factory</div>
-                    <div class="panel-body">
-                        <p>Level: <?php echo($aRow1["woodFactory"]) ?></p>
-                        <p><?php echo(GetProduction("woodFactory"))?> per hour</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class=" panel panel-default">
+                            <div class="panel-heading">Stone Factory</div>
+                            <div class="panel-body">
+                                <p>Level: <?php echo($aRow1["stoneFactory"]) ?></p>
+                                <p><?php echo(GetProduction("stoneFactory"))?> per hour</p>
+                            </div>
+                            <div class="panel-footer">
+                                <!--<form action="index.php" method="post">
+                                    <input type="hidden" name="action" value="upgradeStone" />
+                                    <input type="submit" class="btn btn-default " value="upgrade">
+                                </form>-->
+                                <div class="progress">
+                                    <div class="progress-bar inactive" id="progressBarStone" role="progressbar" aria-valuenow="0"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <span>Disabled</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="panel-footer">
-                        <!--<form action="index.php" method="post">
-                            <input type="hidden" name="action" value="upgradeWood" />
-                            <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>-->
-                        <div class="progress">
-                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                <span>Disabled</span>
+                    <div class="col-md-6">
+                        <div class=" panel panel-default">
+
+
+                            <div class="panel-heading">Metal Factory</div>
+                            <div class="panel-body">
+                                <p>Level: <?php echo($aRow1["metalFactory"]) ?></p>
+                                <p><?php echo(GetProduction("metalFactory"))?> per hour</p>
+                            </div>
+                            <div class="panel-footer">
+                                <!--<form action="index.php" method="post">
+                                    <input type="hidden" name="action" value="upgradeMetal" />
+                                    <input type="submit" class="btn btn-default " value="upgrade">
+                                </form>-->
+                                <div class="progress">
+                                    <div class="progress-bar inactive" id="progressBarMetal" role="progressbar" aria-valuenow="0"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <span>Disabled</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Stone Factory</div>
-                    <div class="panel-body">
-                        <p>Level: <?php echo($aRow1["stoneFactory"]) ?></p>
-                        <p><?php echo(GetProduction("stoneFactory"))?> per hour</p>
-                    </div>
-                    <div class="panel-footer">
-                        <!--<form action="index.php" method="post">
-                            <input type="hidden" name="action" value="upgradeStone" />
-                            <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>-->
-                        <div class="progress">
-                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                <span>Disabled</span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Farm</div>
+                            <div class="panel-body">
+                                <p>Level: <?php echo($aRow1["farm"]) ?></p>
+                                <p><?php echo(GetProduction("farm"))?> per hour</p>
+                            </div>
+                            <div class="panel-footer">
+                                <!--<form action="index.php" method="post">
+                                    <input type="hidden" name="action" value="upgradeFarm" />
+                                    <input type="submit" class="btn btn-default " value="upgrade">
+                                </form>-->
+                                <div class="progress">
+                                    <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <span>Disabled</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Metal Factory</div>
-                    <div class="panel-body">
-                        <p>Level: <?php echo($aRow1["metalFactory"]) ?></p>
-                        <p><?php echo(GetProduction("metalFactory"))?> per hour</p>
-                    </div>
-                    <div class="panel-footer">
-                        <!--<form action="index.php" method="post">
-                            <input type="hidden" name="action" value="upgradeMetal" />
-                            <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>-->
-                        <div class="progress">
-                            <div class="progress-bar inactive" id="progressBarMetal" role="progressbar" aria-valuenow="0"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                <span>Disabled</span>
+
+                            <div class="panel-heading">Storage</div>
+                            <div class="panel-body">
+                                <p>Level: <?php echo($aRow1["storage"]) ?></p>
+                                <p><?php echo(GetStorageCapacity())?> Kap.</p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">Farm</div>
-                    <div class="panel-body">
-                        <p>Level: <?php echo($aRow1["farm"]) ?></p>
-                        <p><?php echo(GetProduction("farm"))?> per hour</p>
-                    </div>
-                    <div class="panel-footer">
-                        <!--<form action="index.php" method="post">
-                            <input type="hidden" name="action" value="upgradeFarm" />
-                            <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>-->
-                        <div class="progress">
-                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                <span>Disabled</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">Storage</div>
-                    <div class="panel-body">
-                        <p>Level: <?php echo($aRow1["storage"]) ?></p>
-                        <p><?php echo(GetStorageCapacity())?> Kap.</p>
-                    </div>
-                    <div class="panel-footer">
-                        <!--<form action="index.php" method="post">
-                            <input type="hidden" name="action" value="upgradeFarm" />
-                            <input type="submit" class="btn btn-default " value="upgrade">
-                        </form>-->
-                        <div class="progress">
-                            <div class="progress-bar inactive" id="progressBarFarm" role="progressbar" aria-valuenow="0"
-                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                                <span>Disabled</span>
+                            <div class="panel-footer">
+                                <!--<form action="index.php" method="post">
+                                    <input type="hidden" name="action" value="upgradeFarm" />
+                                    <input type="submit" class="btn btn-default " value="upgrade">
+                                </form>-->
+                                <div class="progress">
+                                    <div class="progress-bar inactive" id="progressBarStorage" role="progressbar" aria-valuenow="0"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                        <span>Disabled</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -479,7 +501,7 @@ function renderResources($aRow) {
             <div class="panel-heading">Resource Production</div>
             <div class="panel-body">
                 <?php
-                echo ("<p class='wood'>Wood: ". $aRow["wood"] ."</p>");
+                echo ("<p class='wood'>Wood: ". $aRow["wood"] . " / " . $_SESSION['storageCapacity'] ."</p>");
                 ?>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["wood"] / $_SESSION["storageCapacity"] * 100)?>%">
@@ -487,7 +509,7 @@ function renderResources($aRow) {
                 </div>
                 <br/>
                 <?php
-                echo ("<p class='stone'>Stone: ". $aRow["stone"] ."</p>");
+                echo ("<p class='stone'>Stone: ". $aRow["stone"] . " / " . $_SESSION['storageCapacity'] ."</p>");
                 ?>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["stone"] / $_SESSION["storageCapacity"] * 100)?>%">
@@ -495,7 +517,7 @@ function renderResources($aRow) {
                 </div>
                 <br/>
                 <?php
-                echo ("<p class='metal'>Metal: ". $aRow["metal"] ."</p>");
+                echo ("<p class='metal'>Metal: ". $aRow["metal"] . " / " . $_SESSION['storageCapacity'] ."</p>");
                 ?>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["metal"] / $_SESSION["storageCapacity"] * 100)?>%">
@@ -577,7 +599,8 @@ function showHeaderForLoggedIn() {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Change password</a></li>
+                            <li><a href="#">Delete account</a></li>
                         </ul>
                     </li>
                     <li><a href="#" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
@@ -710,6 +733,7 @@ function showRegistrationForm(){
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--<script src="assets/js/flat-ui.min.js"></script>-->
 <script src="assets/js/code.js"></script>
 </body>
 </html>
