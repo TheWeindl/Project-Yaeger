@@ -501,7 +501,7 @@ function renderResources($aRow) {
             <div class="panel-heading">Resource Production</div>
             <div class="panel-body">
                 <?php
-                echo ("<p class='wood'>Wood: ". $_SESSION["wood"] . " / " . $_SESSION['storageCapacity'] ."</p>");
+                echo ("<p class='wood'>Wood: ". $aRow["wood"] . " / " . $_SESSION['storageCapacity'] ."</p>");
                 ?>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["wood"] / $_SESSION["storageCapacity"] * 100)?>%">
@@ -509,7 +509,7 @@ function renderResources($aRow) {
                 </div>
                 <br/>
                 <?php
-                echo ("<p class='stone'>Stone: ". $_SESSION["stone"] . " / " . $_SESSION['storageCapacity'] ."</p>");
+                echo ("<p class='stone'>Stone: ". $aRow["stone"] . " / " . $_SESSION['storageCapacity'] ."</p>");
                 ?>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["stone"] / $_SESSION["storageCapacity"] * 100)?>%">
@@ -517,7 +517,7 @@ function renderResources($aRow) {
                 </div>
                 <br/>
                 <?php
-                echo ("<p class='metal'>Metal: ". $_SESSION["metal"] . " / " . $_SESSION['storageCapacity'] ."</p>");
+                echo ("<p class='metal'>Metal: ". $aRow["metal"] . " / " . $_SESSION['storageCapacity'] ."</p>");
                 ?>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["metal"] / $_SESSION["storageCapacity"] * 100)?>%">
