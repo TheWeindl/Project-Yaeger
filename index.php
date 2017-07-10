@@ -79,12 +79,27 @@ else{
 
     //case logged in
     //case wants to log out
-    if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "logout"){
+    if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "logout") {
         unset($_SESSION["username"]);
         $_REQUEST["action"] = "";
         showHeaderForStart();
         showLoginForm();
         showRegistrationForm();
+
+    } else if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "deleteAcc") {
+        unset($_SESSION["username"]);
+        $_REQUEST["action"] = "";
+        showHeaderForStart();
+        showLoginForm();
+        showRegistrationForm();
+
+    } else if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "changePass") {
+        $_REQUEST["action"] = "";
+        $sPassOld = $_REQUEST["password"];
+        $sPassNew = $_REQUEST["newpassword"];
+        $sPassNew2 = $_REQUEST["newpassword2"];
+        changePass($sPassOld, $sPassNew, $sPassNew2);
+        showContent();
 
     } else if(isset($_REQUEST["action"]) && $_REQUEST["action"] == "upgradeHQ") {
         UpdateBuilding("headquarter");
@@ -179,6 +194,25 @@ function registrationDataCorrect(){
     }
     else{
         return true;
+    }
+}
+
+function changePass($sPassOld, $sPassNew, $sPassNew2) {
+
+    // TODO doesnt work prperly
+    if(!$oMysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE)) {
+        echo("Could not connect to database");
+    }
+    $sUsername = $_SESSION["username"];
+    // $sSelectQuery = "SELECT username, userpw FROM user WHERE username = '".$oMysqli->real_escape_string($sUsername)."' AND userpw = '".$sPassword."';";
+    $sSelectQuery = "SELECT userpw FROM user WHERE username = '".$oMysqli->real_escape_string($sUsername)."';";
+    $mResult = $oMysqli->query($sSelectQuery);
+    $aResult = mysqli_fetch_assoc($mResult);
+    if(password_verify($sPassOld, $aResult["userpw"])  && $sPassNew == $sPassNew2) {
+        $sUpdateQuery = "UPDATE user SET userpw=[". password_hash($sPassNew, PASSWORD_DEFAULT) ."] WHERE username=[".$sUsername."] ";
+        $mResult2 = $oMysqli->query($sUpdateQuery);
+        $aResult2 = mysqli_fetch_assoc($mResult2);
+        var_dump($aResult2);
     }
 }
 
@@ -501,7 +535,7 @@ function renderResources($aRow) {
             <div class="panel-heading">Resource Production</div>
             <div class="panel-body">
                 <?php
-                echo ("<p class='wood'>Wood: ". (int)$_SESSION["wood"] . " / " . $_SESSION['storageCapacity'] ."</p>");
+                echo ("<p class='wood'>Wood: ". (int)$_SESSION["wood"] ."</p>");
                 ?>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["wood"] / $_SESSION["storageCapacity"] * 100)?>%">
@@ -509,7 +543,7 @@ function renderResources($aRow) {
                 </div>
                 <br/>
                 <?php
-                echo ("<p class='stone'>Stone: ". (int)$_SESSION["stone"] . " / " . $_SESSION['storageCapacity'] ."</p>");
+                echo ("<p class='stone'>Stone: ". (int)$_SESSION["stone"] . "</p>");
                 ?>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["stone"] / $_SESSION["storageCapacity"] * 100)?>%">
@@ -517,7 +551,7 @@ function renderResources($aRow) {
                 </div>
                 <br/>
                 <?php
-                echo ("<p class='metal'>Metal: ". (int)$_SESSION["metal"] . " / " . $_SESSION['storageCapacity'] ."</p>");
+                echo ("<p class='metal'>Metal: ". (int)$_SESSION["metal"] ."</p>");
                 ?>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success" role="progressbar" style="width:<?php echo ($aRow["metal"] / $_SESSION["storageCapacity"] * 100)?>%">
@@ -525,7 +559,7 @@ function renderResources($aRow) {
                 </div>
                 <br/>
                 <?php
-                echo ("<p class='people'>People: ". $_SESSION["people"] ."</p>");
+                echo ("<p class='people'>People: ". (int)$_SESSION["people"] ."</p>");
                 ?>
             </div>
             <div class="panel-footer">
@@ -571,7 +605,7 @@ function showLogoutForm(){
     <div class="btn-group" role="group">
         <form action="index.php" method="post" name="logout">
             <input type="hidden" name="action" value="logout" />
-            <input type="submit" class="btn btn-error" value="Logout." />
+            <input type="submit" class="btn btn-danger" value="Logout." />
         </form>
     </div>
     <?php
@@ -599,8 +633,8 @@ function showHeaderForLoggedIn() {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Change password</a></li>
-                            <li><a href="#">Delete account</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#passwordModal">Change password</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#deleteModal">Delete account</a></li>
                         </ul>
                     </li>
                     <li><a href="#" data-toggle="modal" data-target="#logoutModal">Logout</a></li>
@@ -629,7 +663,62 @@ function showHeaderForLoggedIn() {
                 <div class="modal-footer">
                     <form action="index.php" method="get" name="logout">
                         <input type="hidden" name="action" value="logout" />
-                        <input type="submit" class="btn btn-error" value="Logout" />
+                        <input type="submit" class="btn btn-danger" value="Logout" />
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="passwordModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Please enter your current and new password.</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="btn-group" role="group">
+                        <form action="index.php" method="get" name="changePass">
+                            <input type="password" name="password" class="form-control" placeholder="Current Password">
+                            <br/>
+                            <input type="password" name="newpassword" class="form-control" placeholder="New Password">
+                            <br/>
+                            <input type="password" name="newpassword2" class="form-control" placeholder="New Password again">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="action" value="changePass" />
+                    <input type="submit" class="btn" value="Confirm" />
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="deleteModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Do you really want to delete your account?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="btn-group" role="group">
+                        <form action="index.php" method="get" name="deleteAcc">
+                            <label for="password">Please enter your password: </label>
+                            <input type="password" class="form-control" name="password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="action" value="deleteAcc" />
+                    <input type="submit" class="btn btn-danger" value="Delete" />
                     </form>
                 </div>
             </div>

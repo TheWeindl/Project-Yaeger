@@ -46,10 +46,10 @@ for(let j = 0; j < $(".resource-production .progress-bar").length; j++) {
     if(($($(".resource-production .progress-bar")[j]).width() / $($(".resource-production .progress-bar")[j]).parent().width() * 100) >= 70 && ($($(".resource-production .progress-bar")[j]).width() / $($(".resource-production .progress-bar")[j]).parent().width() * 100) < 100) {
         // console.log("more");
         $($(".resource-production .progress-bar")[j]).removeClass("progress-bar-success");
-        $($(".resource-production .progress-bar")[j]).addClass("progress-bar-warning");
+        $($(".resource-production .panel-body .progress-bar")[j]).addClass("progress-bar-warning");
     } else if(($($(".resource-production .progress-bar")[j]).width() / $($(".resource-production .progress-bar")[j]).parent().width() * 100) == 100) {
         $($(".resource-production .progress-bar")[j]).removeClass("progress-bar-warning");
-        $($(".resource-production .progress-bar")[j]).addClass("progress-bar-danger");
+        $($(".resource-production .panel-body .progress-bar")[j]).addClass("progress-bar-danger");
     }
 }
 
