@@ -8,10 +8,10 @@
 
 abstract class Building
 {
-    private $name;
-    private $databaseTable;
-    private $id;
-    private $level;
+    protected $name;
+    protected $databaseTable;
+    protected $id;
+    protected $level;
 
     /**
      * @return mixed
