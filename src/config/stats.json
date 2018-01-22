@@ -1,0 +1,214 @@
+{
+  "buildings": {
+    "headquarters": {
+      "1": {
+        "production": 10,
+        "cost": {
+          "stone": 10,
+          "wood": 10,
+          "time": 60
+        }
+      },
+      "2": {
+        "production": 15,
+        "cost": {
+          "stone": 15,
+          "wood": 15,
+          "time": 90
+        }
+      },
+      "3": {
+        "production": 20,
+        "cost": {
+          "stone": 20,
+          "wood": 20,
+          "time": 120
+        }
+      },
+      "4": {
+        "production": 25,
+        "cost": {
+          "stone": 25,
+          "wood": 25,
+          "time": 150
+        }
+      },
+      "5": {
+        "production": 30,
+        "cost": {
+          "stone": 30,
+          "wood": 30,
+          "time": 180
+        }
+      }
+    },
+    "storage": {
+      "1": {
+        "production": 10,
+        "cost": {
+          "stone": 10,
+          "wood": 10,
+          "time": 60
+        }
+      },
+      "2": {
+        "production": 15,
+        "cost": {
+          "stone": 15,
+          "wood": 15,
+          "time": 90
+        }
+      },
+      "3": {
+        "production": 20,
+        "cost": {
+          "stone": 20,
+          "wood": 20,
+          "time": 120
+        }
+      },
+      "4": {
+        "production": 25,
+        "cost": {
+          "stone": 25,
+          "wood": 25,
+          "time": 150
+        }
+      },
+      "5": {
+        "production": 30,
+        "cost": {
+          "stone": 30,
+          "wood": 30,
+          "time": 180
+        }
+      }
+    },
+    "housing": {
+      "1": {
+        "production": 10,
+        "cost": {
+          "stone": 10,
+          "wood": 10,
+          "time": 60
+        }
+      },
+      "2": {
+        "production": 15,
+        "cost": {
+          "stone": 15,
+          "wood": 15,
+          "time": 90
+        }
+      },
+      "3": {
+        "production": 20,
+        "cost": {
+          "stone": 20,
+          "wood": 20,
+          "time": 120
+        }
+      },
+      "4": {
+        "production": 25,
+        "cost": {
+          "stone": 25,
+          "wood": 25,
+          "time": 150
+        }
+      },
+      "5": {
+        "production": 30,
+        "cost": {
+          "stone": 30,
+          "wood": 30,
+          "time": 180
+        }
+      }
+    },
+    "woodProduction": {
+      "1": {
+        "production": 10,
+        "cost": {
+          "stone": 10,
+          "wood": 10,
+          "time": 60
+        }
+      },
+      "2": {
+        "production": 15,
+        "cost": {
+          "stone": 15,
+          "wood": 15,
+          "time": 90
+        }
+      },
+      "3": {
+        "production": 20,
+        "cost": {
+          "stone": 20,
+          "wood": 20,
+          "time": 120
+        }
+      },
+      "4": {
+        "production": 25,
+        "cost": {
+          "stone": 25,
+          "wood": 25,
+          "time": 150
+        }
+      },
+      "5": {
+        "production": 30,
+        "cost": {
+          "stone": 30,
+          "wood": 30,
+          "time": 180
+        }
+      }
+    },
+    "stoneProduction": {
+      "1": {
+        "production": 10,
+        "cost": {
+          "stone": 10,
+          "wood": 10,
+          "time": 60
+        }
+      },
+      "2": {
+        "production": 15,
+        "cost": {
+          "stone": 15,
+          "wood": 15,
+          "time": 90
+        }
+      },
+      "3": {
+        "production": 20,
+        "cost": {
+          "stone": 20,
+          "wood": 20,
+          "time": 120
+        }
+      },
+      "4": {
+        "production": 25,
+        "cost": {
+          "stone": 25,
+          "wood": 25,
+          "time": 150
+        }
+      },
+      "5": {
+        "production": 30,
+        "cost": {
+          "stone": 30,
+          "wood": 30,
+          "time": 180
+        }
+      }
+    }
+  }
+}
