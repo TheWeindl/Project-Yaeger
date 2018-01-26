@@ -1,0 +1,87 @@
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
+.bg-custom {
+    background-color: #26de81 !important;
+}
+
+div#city {
+    width: 664px;
+    height: 366px;
+    position: relative;
+    left: calc(50vw - 332px);
+    /*top: calc(50vh - 183px);*/
+    transition: opacity 0.5s, top 0.5s;
+}
+
+img.custom-field {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+}
+
+div.custom-block-picker {
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+
+div.custom-block-picker::-webkit-scrollbar {
+    height: 10px;
+}
+
+div.custom-block-picker::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+div.custom-block-picker::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    width: 50px;
+}
+
+.custom-block {
+    min-width: 132px;
+}
+
+.layer-1 {
+    z-index: 1;
+}
+
+.layer-2 {
+    z-index: 2;
+}
+
+.layer-3 {
+    z-index: 3;
+}
+
+.layer-4 {
+    z-index: 4;
+}
+
+.layer-5 {
+    z-index: 5;
+}
+
+.layer-6 {
+    z-index: 6;
+}
+
+.layer-7 {
+    z-index: 7;
+}
+
+.layer-8 {
+    z-index: 8;
+}
+
+.layer-9 {
+    z-index: 9;
+}
