@@ -6,7 +6,7 @@
  * Time: 21:08
  */
 
-const DATABASE_NAME = "project-yeager";
-const USERNAME = "yeager";
+const DATABASE_NAME = "project_yeager";
+const USERNAME = "root";
 const PASSWORD = "";
 const SERVER = "localhost";
