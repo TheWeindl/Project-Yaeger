@@ -26,19 +26,20 @@ class User extends BaseClass {
 
     public static function login($username, $password) {
         $db = new Database();
-        $nameResults = $db->getTableData("name", self::DATABASE_TABLE, "name = " . $username);
+        $nameResults = $db->getTableDataFlat(self::DATABASE_TABLE, "name", "name = " . $username);
 
         if(!empty($nameResults)) {
 
             $password = password_hash($password, PASSWORD_BCRYPT);
 
-            $finalRes = $db->getTableData("password", self::DATABASE_TABLE, "name = ".$username." AND password = ".$password);
+            $finalRes = $db->getTableDataFlat(self::DATABASE_TABLE,"id, password", "name = ".$username." AND password = ".$password);
 
             if(!empty($finalRes)) {
 
                 // login user
 
-                // $_SESSION["user"] = new User()
+                $_SESSION["user"] = new User($finalRes["id"]);
+                return true;
 
             } else {
                 return false;
@@ -47,5 +48,23 @@ class User extends BaseClass {
         } else {
             return false;
         }
+    }
+
+    public static function signup($username, $password, $email) {
+        $db = new Database();
+        $results = $db->getTableData(User::DATABASE_TABLE, "*", "name = " . $username);
+
+        if(!empty($results)) {
+            throw new Exception("Username already exists! Please try a different one.");
+        }
+
+        $results = $db->getTableData(User::DATABASE_TABLE, "*", "email = " . $email);
+
+        if(!empty($results)) {
+            throw new Exception("Email already exists! Try logging in.");
+        }
+
+
+
     }
 }
