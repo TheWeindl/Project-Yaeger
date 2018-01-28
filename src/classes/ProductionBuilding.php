@@ -1,5 +1,7 @@
 <?php
 
+include_once "Building.php";
+
 /**
  * Created by PhpStorm.
  * User: Florian

@@ -1,4 +1,7 @@
 <?php
+
+include_once "BaseClass.php";
+
 /**
  * Created by PhpStorm.
  * User: dprinzensteiner
