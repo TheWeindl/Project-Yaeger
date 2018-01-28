@@ -1,28 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dprinzensteiner
- * Date: 28.01.2018
- * Time: 16:26
- */
+
+include_once "BaseClass.php";
 
 class User extends BaseClass {
 
     const DATABASE_TABLE = "users";
 
-    public $fields = [
+    protected $_fields = [
         "id" => "",
         "name" => "",
         "password" => "",
         "email" => "",
         "layout" => "",
-        "last_login" => ""
+        "last_login" => "",
+        "last_updated" => ""
     ];
 
     public $id;
     public $name;
     public $password;
+    public $email;
     public $layout;
+    public $last_login;
+    public $last_updated;
 
     public static function login($username, $password) {
         $db = new Database();
@@ -32,13 +32,17 @@ class User extends BaseClass {
 
             $password = password_hash($password, PASSWORD_BCRYPT);
 
-            $finalRes = $db->getTableDataFlat(self::DATABASE_TABLE,"id, password", "name = ".$username." AND password = ".$password);
+            $finalRes = $db->getTableDataFlat(self::DATABASE_TABLE,"id, password, layout", "name = ".$username." AND password = ".$password);
 
             if(!empty($finalRes)) {
 
                 // login user
 
-                $_SESSION["user"] = new User($finalRes["id"]);
+                $_SESSION["user"] = array(
+                    "id" => $finalRes["id"],
+                    "name" => $finalRes["name"],
+                    "layout" => $finalRes["layout"],
+                );
                 return true;
 
             } else {
@@ -64,6 +68,15 @@ class User extends BaseClass {
             throw new Exception("Email already exists! Try logging in.");
         }
 
+        $user = new User();
+        $fields = array();
+        $fields["name"] = $username;
+        $fields["password"] = password_hash($password, PASSWORD_BCRYPT);
+        $fields["email"] = $email;
+        $fields["layout"] = LAYOUT;
+        $user->setFields($fields)->save();
+
+        $user->login($username, $password);
 
 
     }

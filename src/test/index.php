@@ -12,8 +12,10 @@ include "../classes/Building.php";
 include "../classes/ProductionBuilding.php";
 include "../classes/WoodProduction.php";
 include "../classes/Database.php";
+session_start();
 
-echo "test";
+$_SESSION["user"]["id"] = 1;
+var_dump($_SESSION);
 
 ?>
 
@@ -24,7 +26,18 @@ echo "test";
         type:"GET",
         data:"getUserLayout",
         success: function(data){
-            console.log(data);
+
         }
     });
+
+    console.log("\n");
+
+    $.ajax({
+        url: "../classes/UserController.php",
+        type: "POST",
+        data: {"function": "updateUserLayout", "layout": JSON.stringify(["test"])},
+        success: function(data) {
+            console.log(data);
+        }
+    })
 </script>

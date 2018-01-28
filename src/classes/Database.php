@@ -97,7 +97,7 @@ class Database
 
 
     // assuption that everything is a string
-    public function getTableData($table, $fields = "*", $where = "", $group = "") {
+    public function getTableData($table, $fields = "*", $where = "", $group = null) {
         $array = array();
         if(gettype($fields) === gettype($array)) {
             // case array
