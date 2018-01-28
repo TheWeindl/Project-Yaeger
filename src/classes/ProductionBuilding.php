@@ -8,11 +8,27 @@
  */
 abstract class ProductionBuilding extends Building {
 
+    /**
+     * @return mixed
+     * Returns the current production rate of the building
+     */
     public function getCurrentProduction() {
-        //TODO
+        $informationManager = new InformationManager();
+        $buildingInfo = $informationManager->getAllInformation(static::BUILDING_NAME);
+        return $buildingInfo->production;
     }
 
     public function updateStats() {
         //TODO
+    }
+
+    /**
+     * @return mixed
+     * Returns the upgrade costs of the building (json object)
+     */
+    public function getUpgradeCosts(){
+        $informationManager = new InformationManager();
+        $buildingInfo = $informationManager->getAllInformation(static::BUILDING_NAME);
+        return $buildingInfo->cost;
     }
 }

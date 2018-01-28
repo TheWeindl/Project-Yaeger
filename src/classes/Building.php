@@ -6,44 +6,10 @@
  * Time: 20:43
  */
 
-abstract class Building
+abstract class Building extends BaseClass
 {
-    protected $name;
-    protected $databaseTable;
     protected $id;
     protected $level;
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDatabaseTable()
-    {
-        return $this->databaseTable;
-    }
-
-    /**
-     * @param mixed $databaseName
-     */
-    public function setDatabaseTable($databaseTable)
-    {
-        $this->databaseName = $databaseTable;
-    }
 
     /**
      * @return mixed

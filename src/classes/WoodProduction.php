@@ -8,5 +8,8 @@
  */
 class WoodProduction extends ProductionBuilding
 {
+    const DATABASE_TABLE = "woodproductions";
+    const BUILDING_NAME = "woodProduction";
+
 
 }
