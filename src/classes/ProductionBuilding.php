@@ -15,7 +15,9 @@ abstract class ProductionBuilding extends Building {
     public function getCurrentProduction() {
         $informationManager = new InformationManager();
         $buildingInfo = $informationManager->getAllInformation(static::BUILDING_NAME);
-        return $buildingInfo->production;
+
+        $level = "1";
+        return $buildingInfo->$level->production;
     }
 
     public function updateStats() {
