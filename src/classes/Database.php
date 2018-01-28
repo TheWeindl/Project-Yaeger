@@ -10,7 +10,7 @@ include_once("../config/config.php");
 
 class Database
 {
-    public function execute($sql) {
+    public static function execute($sql) {
         $mysqli = new mysqli(SERVER, USERNAME, PASSWORD, DATABASE_NAME);
 
         /* check connection */
@@ -25,9 +25,13 @@ class Database
         return $results;
     }
 
+    public static function getInstance() {
+        return new Database();
+    }
+
 
     // assuption that everything is a string
-    public function getTableData($fields, $table, $where, $group) {
+    public function getTableData($fields, $table, $where = "", $group = "") {
         $array = array();
         if(gettype($fields) === gettype($array)) {
             // case array

@@ -7,12 +7,15 @@
  */
 
 class Headquarter extends Building {
+
     /**
      * Headquarter constructor.
+     * @param string $id
      */
     public function __construct($id = "") {
         if(!empty($id)) {
             $this->id = $id;
         }
+        $this->databaseTable = "headquarters";
     }
 }
