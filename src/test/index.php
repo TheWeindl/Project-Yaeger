@@ -15,5 +15,16 @@ include "../classes/Database.php";
 
 echo "test";
 
+?>
 
-var_dump(Database::execute("SELECT * FROM users"));
+<script src="../../frontend-test/assets/js/jquery-3.3.1.min.js"></script>
+<script>
+    $.ajax({
+        url:"../classes/UserController.php",
+        type:"GET",
+        data:"getUserLayout",
+        success: function(data){
+            console.log(data);
+        }
+    });
+</script>

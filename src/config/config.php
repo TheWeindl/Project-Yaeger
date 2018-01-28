@@ -8,12 +8,7 @@
 
 const DATABASE_NAME = "project_yeager";
 const USERNAME = "root";
-const PASSWORD = "";
-const SERVER = "localhost";
-
-const DATABASE_NAME = "project-yeager";
-const USERNAME = "yeager";
-const PASSWORD = "";
+const PASSWORD = "Hagenberg1!";
 const SERVER = "localhost";
 
 // rows => cols => values
