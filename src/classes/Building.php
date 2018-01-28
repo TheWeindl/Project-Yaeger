@@ -1,4 +1,8 @@
 <?php
+
+include_once "BaseClass.php";
+include_once "InformationManager.php";
+
 /**
  * Created by PhpStorm.
  * User: dprinzensteiner

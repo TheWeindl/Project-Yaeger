@@ -1,4 +1,7 @@
 <?php
+
+include_once "Building.php";
+
 /**
  * Created by PhpStorm.
  * User: dprinzensteiner
@@ -7,15 +10,7 @@
  */
 
 class Headquarter extends Building {
+    const DATABASE_TABLE = "headquarters";
+    const BUILDING_NAME = "headquarters";
 
-    /**
-     * Headquarter constructor.
-     * @param string $id
-     */
-    public function __construct($id = "") {
-        if(!empty($id)) {
-            $this->id = $id;
-        }
-        $this->databaseTable = "headquarters";
-    }
 }

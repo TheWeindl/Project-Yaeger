@@ -1,5 +1,7 @@
 <?php
 
+include_once "ProductionBuilding.php";
+
 /**
  * Created by PhpStorm.
  * User: Florian
