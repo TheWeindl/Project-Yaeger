@@ -92,8 +92,8 @@ abstract class BaseClass {
             case 'domain': (preg_match("/^([A-Za-z]+[0-9]*){3,50}$/", $parameter))  OR $result = false; break;  //DON'T ALLOW DASH! it will make subdomains stop working (because it tries to create a db with the same name
             case 'uint':
             case 'id': (preg_match("/^[0-9]{1,100}$/", $parameter)) OR $result = false; break;
-            case 'login': ((preg_match("/^_*[\p{L}\d]+([\p{L}\d]*[._@-]*[\p{L}\d]*)*$/u", $parameter) && mb_strlen($parameter) <= User::MAXIMUM_LOGIN_LENGTH && mb_strlen($parameter) >= User::MINIMUM_LOGIN_LENGTH)) OR $result = false; break;                      //This means: begins with 0 or more '_', followed by at least 1 word character, followed by any combination of .,_,-,@ and word characters.
-            case 'login_with_trailing_spaces': ((preg_match("/^_*[\p{L}\d]+([\p{L}\d]*[._@-]*[\p{L}\d]*)*\s*$/u", $parameter) && mb_strlen($parameter) <= User::MAXIMUM_LOGIN_LENGTH && mb_strlen($parameter) >= User::MINIMUM_LOGIN_LENGTH)) OR $result = false; break;  //Same as above, but we are also allowing trailing spaces, since these are trimmed by default, but we want such a username to be able to be submitted in the first place
+            // case 'login': ((preg_match("/^_*[\p{L}\d]+([\p{L}\d]*[._@-]*[\p{L}\d]*)*$/u", $parameter) && mb_strlen($parameter) <= User::MAXIMUM_LOGIN_LENGTH && mb_strlen($parameter) >= User::MINIMUM_LOGIN_LENGTH)) OR $result = false; break;                      //This means: begins with 0 or more '_', followed by at least 1 word character, followed by any combination of .,_,-,@ and word characters.
+            // case 'login_with_trailing_spaces': ((preg_match("/^_*[\p{L}\d]+([\p{L}\d]*[._@-]*[\p{L}\d]*)*\s*$/u", $parameter) && mb_strlen($parameter) <= User::MAXIMUM_LOGIN_LENGTH && mb_strlen($parameter) >= User::MINIMUM_LOGIN_LENGTH)) OR $result = false; break;  //Same as above, but we are also allowing trailing spaces, since these are trimmed by default, but we want such a username to be able to be submitted in the first place
             case 'name': preg_match("/^[\p{L} \d-,'\.\(\)]+$/", $parameter) OR $result = false; break; //A "name" (first name, last name etc) can only consist of letters, numbers, dots, commans, dashes, quotes,parentheses, spaces
             //case 'email': (preg_match("/^([a-zA-Z0-9+_\.\-'])+\@(([a-zA-Z0-9_\-])+\.)+([a-zA-Z0-9]{2,4})+$/", $parameter))  OR $result = false; break;  //This means: begins with 0 or more '_' or '-', followed by at least 1 word character, followed by any combination of '_', '-', '.', '+' and word characters, then '@', then the same as before, then the '.' and then 1 ore more characters.
             case 'email': (preg_match("/^([\p{L}\d_\.\-\+'])+\@(([a-zA-Z0-9_\-])+\.)+([a-zA-Z0-9]{2,4})+$/u", $parameter))  OR $result = false; break;       //unicode equivalent of above
@@ -120,7 +120,7 @@ abstract class BaseClass {
             case 'boolean': $result = filter_var($parameter, FILTER_VALIDATE_BOOLEAN); break;
             case 'version': (preg_match("/^[0-9\.]+$/", $parameter))  OR $result = false; break;
             default:
-                throw new EfrontException("Undefined check type: {$type}");
+                throw new Exception("Undefined check type: {$type}");
                 break;
         }
         return $result;
